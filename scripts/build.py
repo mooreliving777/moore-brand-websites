@@ -94,6 +94,13 @@ if __name__ == "__main__":
     # Publish only reviewed public metadata, not raw content or authenticated site details.
     safe=[{"name":b["name"],"path":b["slug"]+"/","wordpress_url":source_for(b)["site"]["url"],"hero":b["hero"],"legacy":bool(b.get("legacy"))} for b in BRANDS]
     (ROOT/"data/site-map.json").write_text(json.dumps(safe,indent=2))
-    (ROOT/"sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+BASE+b["slug"]+'/</loc></url>' for b in BRANDS)+''.join('<url><loc>'+BASE+p+'</loc></url>' for p in ['blog/','blog/website-launch-handoff-checklist/'])+'</urlset>')
+    # Discover every published HTML page so new journal posts stay in the sitemap.
+    paths = sorted({f.relative_to(ROOT).as_posix().removesuffix("index.html")
+                    if f.name == "index.html" else f.relative_to(ROOT).as_posix()
+                    for f in ROOT.rglob("*.html")
+                    if not any(part.startswith(".") or part in {"node_modules", "dist"}
+                               for part in f.relative_to(ROOT).parts)})
+    (ROOT/"sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join('  <url><loc>'+esc(BASE+path)+'</loc></url>\n' for path in paths)+'</urlset>\n')
+    (ROOT/"data/page-map.json").write_text(json.dumps({"base_url": BASE, "pages": paths}, indent=2)+"\n")
     (ROOT/"robots.txt").write_text("User-agent: *\nAllow: /\nSitemap: "+BASE+"sitemap.xml\n")
     print("Built 13 brand websites and the directory.")
