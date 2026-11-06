@@ -1,48 +1,49 @@
-# Universal fast newsletter and lead-entry system
+# Universal fast newsletter / lead entry
 
-**Status:** Draft / review gated · Issue #1 · Provider connections and automations are NOT live.
+**Status: draft review branch only. No new live provider connection or automatic subscriber import.**
 
-## Implemented
+## Verified native subscription destinations (2026-11-06)
 
-- A bright, responsive optional email-capture component in `assets/newsletter-entry.mjs` and `assets/newsletter-entry.css` (one email field and separate consent).
-- A progressive enhancement controller in `assets/newsletter-wiring.mjs` and integration into `scripts/build.py`, already rendered in **11 non-legacy brand companion pages on this review branch**.
-- Each page preserves its original WordPress/booking/resource CTA as the non-JavaScript fallback. When enhanced, the branded card **links to the same published destination** until a real provider is approved.
-- The two legacy/coming-soon pages are excluded. No user account is required to view or follow a public link.
-- Shared public configuration in `data/newsletter-public-config.json` is **intentionally empty**. There is no active Mailchimp list, endpoint, automation or subscriber storage in this repo.
-- Validations reject non-HTTPS or untrusted hosted form actions. A real form is rendered only when the provider-issued POST destination, privacy policy and GDPR consent-field mapping are present; otherwise the original link remains. No fake subscription success, tokens, API keys, or client-side databases.
-- A dedicated GitHub Actions check verifies component tests and source-generator consistency.
+Read-only inspections of connected WordPress content confirmed **Jetpack subscription blocks on eight published pages**. Each exact destination matches the companion site's original call-to-action URL.
 
-## How the public-only configuration will work, AFTER provider verification
+| Companion site | Existing official WordPress subscription destination |
+| --- | --- |
+| Leonard E. Moore | https://leonardemoorellc.wordpress.com/legacy-insider-letter/ |
+| City Web Design Pros | https://citywebdesignprosllc.wordpress.com/free-website-growth-guide/ |
+| Moore Legacy Management | https://moorelegacymanagementgroupllc.wordpress.com/partnership-readiness/ |
+| The Harsh Truth Clothing | https://theharshtruthclothinglinellc.wordpress.com/vip-drop-alerts/ |
+| Fireworks TV | https://fireworkstv.wordpress.com/fireworks-inside-track/ |
+| Bridge to Better Foundation | https://thebridgetobetterfoundationinc.wordpress.com/community-updates/ |
+| Amanda Halterman | https://amandahaltermanllc.wordpress.com/amanda-inside-updates/ |
+| AI Developer Portfolio | https://leonardemooreaideveloperportfo.wordpress.com/digital-innovation-brief/ |
 
-```json
-{
-  "version": 1,
-  "brands": {
-    "brand-slug": {
-      "mailchimpAction": "https://YOUR-REAL-MAILCHIMP-DATACENTER.list-manage.com/subscribe/post?u=ISSUED_ID&id=ISSUED_AUDIENCE",
-      "privacyUrl": "https://YOUR-OWN-APPROVED-PRIVACY-POLICY.example/privacy",
-      "consentFieldName": "gdpr[ACTUAL_PROVIDER_FIELD_NUMBER]"
-    }
-  }
-}
-```
+Presence of a Jetpack block in the connected site's page content is **not yet proof** of successful public signup, email confirmation, subscriber list mapping, or unsubscribe behavior. End-to-end testing must use an authorized test mailbox.
 
-**The above is explanatory format only, not working settings and not approved for publishing.** Use provider-generated embed details and preserve required hidden bot-control inputs if present; the current component must be reviewed against the real hosted form first. The official URL and public audience ID are not secret, but never put Mailchimp API keys, owner credentials, subscriber lists or personal information into public files. Confirm that the brand-specific privacy link is real.
+## Three non-verified brand routes
 
-The module reads brand-specific public config and falls back to an existing secure WordPress URL when the config is absent, invalid, or unreadable. The provider—not the static website—is responsible for email verification, double opt-in where applicable, errors and unsubscribe handling.
+- **Moore Computer Solutions**: connected WordPress.com lists the site as **suspended**. Do not describe its guide as a working newsletter entry. Hosting/account review is a separate task.
+- **B3 The Place 2 Be**: the verified booking-guide page has **no Jetpack subscription block**. Keep this a booking journey, not a newsletter.
+- **The Harsh Truth Official Store**: its companion CTA points to blog content. No distinct newsletter signup provider was verified at this route. Do not relabel the blog visit as subscribing.
 
-## Release and privacy gates
+The two legacy sites are intentionally excluded from the enhancement.
 
-1. Verify each actual site is owned and that its existing lead magnet or newsletter destination is current; a lead-magnet page is not proof of an active mailing list.
-2. Confirm each brand's authorized Mailchimp audience or alternative provider, GDPR preferences, suppression logic, duplicate handling, and the exact official embedded form action and consent-field mapping.
-3. Confirm marketing consent is not bundled with app account terms. Signup/login and promotional email subscriptions are separate products.
-4. Review provider-specific anti-spam fields and behavior, welcome journeys, tags, unsubscribe and form submission results before activating any email capture.
-5. Run `node --test test/*.test.mjs` and `python scripts/build.py` then check that generated files are unchanged. Test mobile layouts, keyboard/screen readers, no-JS fallback, and provider outages on a nonpublic preview.
-6. Require owner approval before merging, deploying, publishing, paying for services, or enabling any live subscription automation.
+## What the code does
 
-## Scope limits
+- `assets/newsletter-entry.mjs`: accessible one-field email component with separate, mapped consent, only for future approved provider-backed forms; never collects emails by itself.
+- `assets/newsletter-routing.mjs`: a tested, pure policy decision. It permits an existing `wordpress_jetpack` route **only if its HTTPS URL exactly matches the preexisting official CTA**. Other links stay as their original CTA. A separate Mailchimp form path is disabled unless `service='mailchimp_embedded'`, `ownerApproved=true`, and the action, privacy URL, and GDPR consent-field name are valid.
+- `assets/newsletter-wiring.mjs`: loads a public-only config; shows the native-card link only for a verified route. Malformed, missing or unreachable configuration preserves the original CTA.
+- `data/newsletter-public-config.json`: public routing metadata for eight native WordPress pages. **Contains no API tokens, emails, contact records or Mailchimp audiences.**
+- `scripts/build.py`: keeps the eleven non-legacy brand pages' optional enhancement hooks in their shared template.
+- `test/newsletter-routing.test.mjs`: verifies eight exact native routes, excludes the suspended/non-newsletter pages, and tests Mailchimp fail-closed behavior.
+- GitHub Actions: Python syntax, Node tests, generated-page regressions and preview diffs. Existing unrelated generator drift is reported but not rewritten automatically.
 
-- Two-click signup is the goal, not a guarantee when user authentication, consent, bot checks or double opt-in are necessary.
-- This repository is a **static companion-site network**, not a central SSO or subscriber database.
-- No hosted OAuth secret or access token should ever be stored in public JavaScript.
-- Mailchimp audience/automation management is not available from the currently connected chat integration. Configure those settings in the authorized Mailchimp app or a separate approved integration.
+## Activation review
+
+1. Test the eight public WordPress pages in a signed-out browser for an actual visible email entry.
+2. With explicit owner approval, subscribe a dedicated test mailbox to **one** brand and verify the confirmation, permissions, welcome flow and unsubscribe.
+3. Repeat per brand only after verifying audience segregation and that no subscription to another brand occurs.
+4. Keep account sign-in and marketing permission separate. Two clicks is a design goal, not a guarantee when confirmation or bot checks apply.
+5. Add Mailchimp only if the native subscription doesn't meet the business requirements. The connected Mailchimp chat plugin cannot configure audiences/automations; those require direct Mailchimp app access or another approved integration.
+6. Do not merge, publish, connect paid services, submit subscriptions, or change live WordPress pages without explicit approval.
+
+**No production publishing occurred in this branch.**
