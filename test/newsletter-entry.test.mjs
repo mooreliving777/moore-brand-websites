@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { validatedMailchimpAction, validatedPublicLink } from '../assets/newsletter-entry.mjs';
+import { validatedMailchimpAction, validatedPublicLink, validatedConsentField } from '../assets/newsletter-entry.mjs';
 
 const good = 'https://us21.list-manage.com/subscribe/post?u=demo-public-embed-id&id=example-list';
 test('only HTTPS public Mailchimp POST endpoints with expected IDs can collect email', () => {
@@ -20,4 +20,10 @@ test('links must be public HTTPS and never include credentials', () => {
   for (const url of ['javascript:alert(1)', 'http://example.org', 'https://user:pw@example.org', null]) {
     assert.equal(validatedPublicLink(url), null);
   }
+});
+
+test('consent field maps only to a provider GDPR field', () => {
+  assert.equal(validatedConsentField('gdpr[123456]'), 'gdpr[123456]');
+  for (const value of ['gdpr[]', 'GDPR[123]', 'EMAIL', 'gdpr[abc]', 'gdpr[1]extra', null])
+    assert.equal(validatedConsentField(value), null);
 });
