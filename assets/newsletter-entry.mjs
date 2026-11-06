@@ -10,6 +10,7 @@ export function validatedMailchimpAction(value) {
     return url.href;
   } catch { return null; }
 }
+export const validatedConsentField = value => (typeof value === 'string' && /^gdpr\\[\\d{1,12}\\]$/.test(value)) ? value : null;
 export function validatedPublicLink(value) {
   try {
     const url = new URL(value);
@@ -36,7 +37,8 @@ export function mountNewsletterEntry(root, {
   const action = validatedMailchimpAction(mailchimpAction);
   const privacy = validatedPublicLink(privacyUrl);
   const fallback = validatedPublicLink(existingSignupUrl);
-  const consentMapped = !requireConsent || (typeof consentFieldName === 'string' && /^gdpr\[\d{1,12}\]$/.test(consentFieldName));
+  const verifiedConsentField = validatedConsentField(consentFieldName);
+  const consentMapped = !requireConsent || !!verifiedConsentField;
   root.replaceChildren();
   root.classList.add('newsletter-entry');
   root.append(element('h3', 'newsletter-entry-title', title));
@@ -74,7 +76,7 @@ export function mountNewsletterEntry(root, {
     const consentLabel = element('label', 'newsletter-entry-consent');
     const consent = document.createElement('input');
     consent.type = 'checkbox';
-    consent.name = consentFieldName;
+    consent.name = verifiedConsentField;
     consent.value = 'Y';
     consent.required = true;
     consent.checked = false;
