@@ -13,3 +13,11 @@
 .newsletter-entry-privacy{display:inline-block;color:#b9eeff;font-size:.82rem;margin-top:4px}
 .newsletter-entry :focus-visible{outline:3px solid #58e6e1;outline-offset:3px}
 @media(max-width:480px){.newsletter-entry-form{display:grid}.newsletter-entry-submit,.newsletter-entry-link{width:100%}}
+
+/* Progressive enhancement preserves the original WordPress CTA without JS. */
+.newsletter-entry[hidden],.newsletter-entry-root[hidden]{display:none!important}
+.connect.newsletter-enhanced > h2,.connect.newsletter-enhanced > p:not(.eyebrow),.connect.newsletter-enhanced > a.button.primary{display:none!important}
+.connect .newsletter-entry{margin:18px auto 24px;text-align:left}
+.connect .newsletter-entry h3{font-family:system-ui,Segoe UI,Arial,sans-serif;color:#fff}
+.connect .newsletter-entry a{color:#121b36}
+.connect .newsletter-entry a.newsletter-entry-privacy{color:#b9eeff}
