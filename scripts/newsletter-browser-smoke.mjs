@@ -82,7 +82,14 @@ try {
   }
 
   await page.goto(origin + '/', { waitUntil: 'domcontentloaded' });
-  await page.locator('.directory-card .asset-fallback-directory').first().waitFor({ state: 'visible', timeout: 10000 });
+  // Lazy directory pictures outside the viewport won't fail until requested.
+  // Force them all to load in this synthetic offline test before counting.
+  await page.evaluate(() => {
+    for (const img of document.querySelectorAll('.directory-card img')) img.loading = 'eager';
+  });
+  await page.waitForFunction(() => document.querySelectorAll('.directory-card img').length === 0,
+    null, { timeout: 10000 });
+  await page.locator('.directory-card .asset-fallback-directory').first().waitFor({ state: 'visible' });
   assert.equal(await page.locator('.directory-card .asset-fallback-directory').count(), 13,
     'All thirteen blocked network thumbnails should have branded fallbacks');
   assert.equal(await page.locator('.directory-card img').count(), 0);
