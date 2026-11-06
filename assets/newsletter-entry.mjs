@@ -31,7 +31,7 @@ const element = (tag, className, text) => {
 export function mountNewsletterEntry(root, {
   title = 'Get useful updates', description = 'News and practical ideas, sent with permission.',
   brand = 'this brand', mailchimpAction = null, privacyUrl = null,
-  existingSignupUrl = null, requireConsent = true, consentFieldName = null
+  existingSignupUrl = null, requireConsent = true, consentFieldName = null, fallbackLabel = 'Continue to official website'
 } = {}) {
   if (!root) throw new Error('A newsletter entry container is required.');
   const action = validatedMailchimpAction(mailchimpAction);
@@ -47,7 +47,7 @@ export function mountNewsletterEntry(root, {
   // No "almost working" email inputs on a public site.
   if (!action || !privacy || !consentMapped) {
     if (fallback) {
-      const link = element('a', 'newsletter-entry-link', 'Continue to official signup');
+      const link = element('a', 'newsletter-entry-link', fallbackLabel);
       link.href = fallback;
       link.rel = 'noopener noreferrer';
       root.append(link);
