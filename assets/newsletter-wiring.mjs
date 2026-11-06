@@ -4,7 +4,7 @@ const root = document.querySelector('[data-newsletter-entry]');
 if (root) {
   const section = root.closest('#connect');
   const original = section?.querySelector('a.button.primary');
-  const fallbackUrl = original ? validatedPublicLink(original.href) : null;
+  const originalUrl = original ? validatedPublicLink(original.href) : null;
   const slug = root.dataset.brandSlug;
   let publicConfig = null;
   try {
@@ -20,7 +20,12 @@ if (root) {
   } catch {
     // Keep the existing official link on any configuration/network failure.
   }
-  if (publicConfig || fallbackUrl) {
+  if (publicConfig || originalUrl) {
+    // The known WordPress-hosted subscription route must match the existing CTA.
+    // Never trust arbitrary public config to send visitors to an unrelated domain.
+    const hostedUrl = publicConfig?.service === 'wordpress_jetpack' &&
+      validatedPublicLink(publicConfig?.hostedSignupUrl) === originalUrl ? originalUrl : null;
+    const fallbackUrl = hostedUrl || originalUrl;
     const state = mountNewsletterEntry(root, {
       title: root.dataset.offer || 'Stay connected',
       description: 'Choose the official next step for this brand. No new account is required on this companion page.',
@@ -30,7 +35,8 @@ if (root) {
       consentFieldName: publicConfig?.consentFieldName || null,
       requireConsent: true,
       existingSignupUrl: fallbackUrl,
-      fallbackLabel: root.dataset.offer ? 'Explore ' + root.dataset.offer : 'Visit the official website'
+      fallbackLabel: hostedUrl ? 'Open checklist and email subscription' :
+        root.dataset.offer ? 'Explore ' + root.dataset.offer : 'Visit the official website'
     });
     if (state.active || fallbackUrl) {
       root.hidden = false;
