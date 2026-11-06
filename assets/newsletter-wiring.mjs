@@ -18,27 +18,31 @@ if (root) {
       }
     }
   } catch {
-    // Keep the existing official link on any configuration/network failure.
+    // Original official link remains visible when config loading fails.
   }
-  if (publicConfig || originalUrl) {
-    // The known WordPress-hosted subscription route must match the existing CTA.
-    // Never trust arbitrary public config to send visitors to an unrelated domain.
-    const hostedUrl = publicConfig?.service === 'wordpress_jetpack' &&
-      validatedPublicLink(publicConfig?.hostedSignupUrl) === originalUrl ? originalUrl : null;
-    const fallbackUrl = hostedUrl || originalUrl;
+
+  // Display an enhanced newsletter card only for a reviewed provider route.
+  // Booking guides, generic blog links and suspended sites are not subscriptions.
+  const native = publicConfig?.service === 'wordpress_jetpack' &&
+    validatedPublicLink(publicConfig.hostedSignupUrl) === originalUrl;
+  const mailchimp = publicConfig?.service === 'mailchimp_embedded' &&
+    publicConfig?.ownerApproved === true;
+  if (originalUrl && (native || mailchimp)) {
     const state = mountNewsletterEntry(root, {
       title: root.dataset.offer || 'Stay connected',
-      description: 'Choose the official next step for this brand. No new account is required on this companion page.',
+      description: native
+        ? 'Explore the official WordPress page and its existing subscription options.'
+        : 'Subscribe to receive updates from this brand. Confirmation may be required.',
       brand: root.dataset.brandName || 'this brand',
-      mailchimpAction: publicConfig?.mailchimpAction || null,
-      privacyUrl: publicConfig?.privacyUrl || null,
-      consentFieldName: publicConfig?.consentFieldName || null,
+      mailchimpAction: mailchimp ? publicConfig.mailchimpAction : null,
+      privacyUrl: mailchimp ? publicConfig.privacyUrl : null,
+      consentFieldName: mailchimp ? publicConfig.consentFieldName : null,
       requireConsent: true,
-      existingSignupUrl: fallbackUrl,
-      fallbackLabel: hostedUrl ? 'Open checklist and email subscription' :
-        root.dataset.offer ? 'Explore ' + root.dataset.offer : 'Visit the official website'
+      existingSignupUrl: originalUrl,
+      fallbackLabel: native ? 'Open on WordPress' : 'Visit official updates'
     });
-    if (state.active || fallbackUrl) {
+    // Failed provider validation must leave the existing CTA visible.
+    if (native || state.active) {
       root.hidden = false;
       section.classList.add('newsletter-enhanced');
     }
