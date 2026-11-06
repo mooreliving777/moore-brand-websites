@@ -25,8 +25,12 @@ test('legacy pages remain unchanged and without newsletter entry', async () => {
   assert.doesNotMatch(html, /data-newsletter-entry|newsletter-wiring\.mjs/);
  }
 });
-test('no subscriber endpoint or list is configured by default', async () => {
+test('City Web Design Pros uses existing WordPress subscription destination, not an unverified form POST', async () => {
  const data=JSON.parse(await readFile(new URL('../data/newsletter-public-config.json', import.meta.url),'utf8'));
  assert.equal(data.version, 1);
- assert.deepEqual(data.brands, {});
+ assert.deepEqual(Object.keys(data.brands), ['city-web-design-pros']);
+ assert.equal(data.brands['city-web-design-pros'].service, 'wordpress_jetpack');
+ assert.equal(data.brands['city-web-design-pros'].hostedSignupUrl,
+   'https://citywebdesignprosllc.wordpress.com/free-website-growth-guide/');
+ assert.equal(Object.hasOwn(data.brands['city-web-design-pros'], 'mailchimpAction'), false);
 });
