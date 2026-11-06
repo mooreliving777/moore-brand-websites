@@ -30,19 +30,20 @@ const element = (tag, className, text) => {
 export function mountNewsletterEntry(root, {
   title = 'Get useful updates', description = 'News and practical ideas, sent with permission.',
   brand = 'this brand', mailchimpAction = null, privacyUrl = null,
-  existingSignupUrl = null, requireConsent = true
+  existingSignupUrl = null, requireConsent = true, consentFieldName = null
 } = {}) {
   if (!root) throw new Error('A newsletter entry container is required.');
   const action = validatedMailchimpAction(mailchimpAction);
   const privacy = validatedPublicLink(privacyUrl);
   const fallback = validatedPublicLink(existingSignupUrl);
+  const consentMapped = !requireConsent || (typeof consentFieldName === 'string' && /^gdpr\[\d{1,12}\]$/.test(consentFieldName));
   root.replaceChildren();
   root.classList.add('newsletter-entry');
   root.append(element('h3', 'newsletter-entry-title', title));
   root.append(element('p', 'newsletter-entry-description', description));
 
   // No "almost working" email inputs on a public site.
-  if (!action || !privacy) {
+  if (!action || !privacy || !consentMapped) {
     if (fallback) {
       const link = element('a', 'newsletter-entry-link', 'Continue to official signup');
       link.href = fallback;
@@ -73,6 +74,8 @@ export function mountNewsletterEntry(root, {
     const consentLabel = element('label', 'newsletter-entry-consent');
     const consent = document.createElement('input');
     consent.type = 'checkbox';
+    consent.name = consentFieldName;
+    consent.value = 'Y';
     consent.required = true;
     consent.checked = false;
     consentLabel.append(consent, document.createTextNode(
