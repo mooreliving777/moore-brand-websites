@@ -1,4 +1,10 @@
 {
   "version": 1,
-  "brands": {}
+  "brands": {
+    "city-web-design-pros": {
+      "service": "wordpress_jetpack",
+      "hostedSignupUrl": "https://citywebdesignprosllc.wordpress.com/free-website-growth-guide/",
+      "note": "Published WordPress page includes an existing Jetpack Subscriptions block; browser signup end-to-end unverified. No embedded endpoint in companion site."
+    }
+  }
 }
