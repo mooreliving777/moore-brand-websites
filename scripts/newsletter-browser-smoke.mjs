@@ -49,6 +49,9 @@ try {
   for (const slug of nativeBrands) {
     await page.goto(origin + '/' + slug + '/', { waitUntil: 'domcontentloaded' });
     await page.locator('#connect.newsletter-enhanced').waitFor({ state: 'visible', timeout: 10000 });
+    await page.locator('.asset-fallback-hero').waitFor({ state: 'visible', timeout: 10000 });
+    assert.equal(await page.locator('.hero-art img').count(), 0, slug + ': blocked hero photo should be replaced');
+    assert.equal(await page.locator('.asset-fallback-hero').getAttribute('role'), 'img');
     const section = page.locator('#connect');
     const sourceCTA = section.locator('a.button.primary');
     assert.equal(await sourceCTA.isVisible(), false, slug + ': original button should be replaced only after validated enhancement');
@@ -78,6 +81,12 @@ try {
     }
   }
 
+  await page.goto(origin + '/', { waitUntil: 'domcontentloaded' });
+  await page.locator('.directory-card .asset-fallback-directory').first().waitFor({ state: 'visible', timeout: 10000 });
+  assert.equal(await page.locator('.directory-card .asset-fallback-directory').count(), 13,
+    'All thirteen blocked network thumbnails should have branded fallbacks');
+  assert.equal(await page.locator('.directory-card img').count(), 0);
+  await page.screenshot({ path: path.join(captures, 'network-directory-gradient-fallback.png'), fullPage: true });
   await context.close();
   const noJs = await browser.newContext({ viewport: { width: 390, height: 844 }, javaScriptEnabled: false });
   const plainPage = await noJs.newPage();
