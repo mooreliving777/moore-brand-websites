@@ -1,0 +1,27 @@
+name: Brand newsletter prototype checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check generator syntax
+        run: python -m py_compile scripts/build.py
+      - name: Test safe provider configuration and all brand page hooks
+        run: node --test test/*.test.mjs
+      - name: Verify generated brand pages are in sync
+        run: |
+          python scripts/build.py
+          git diff --exit-code
