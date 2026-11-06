@@ -10,7 +10,7 @@ export function validatedMailchimpAction(value) {
     return url.href;
   } catch { return null; }
 }
-export const validatedConsentField = value => (typeof value === 'string' && /^gdpr\\[\\d{1,12}\\]$/.test(value)) ? value : null;
+export const validatedConsentField = value => (typeof value === 'string' && /^gdpr\[\d{1,12}\]$/.test(value)) ? value : null;
 export function validatedPublicLink(value) {
   try {
     const url = new URL(value);
