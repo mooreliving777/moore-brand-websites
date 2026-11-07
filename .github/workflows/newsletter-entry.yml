@@ -18,12 +18,15 @@ jobs:
         with:
           python-version: '3.12'
       - name: Check generator syntax
-        run: python -m py_compile scripts/build.py
+        run: python -m py_compile scripts/build.py scripts/landing_sections.py scripts/check_landing.py
+      - name: Check all ten landing sections and anchors before regeneration
+        run: python scripts/check_landing.py
       - name: Test safe provider configuration and all brand page hooks
         run: node --test test/*.test.mjs
       - name: Validate regenerated pages retain newsletter integration
         run: |
           python scripts/build.py
+          python scripts/check_landing.py
           node --test test/*.test.mjs
           # The repository already has hand-edited generated pages. Report
           # their differences without rewriting or merging them automatically.
@@ -44,6 +47,8 @@ jobs:
         run: npm install --no-save --package-lock=false playwright@1.56.1
       - name: Verify native newsletter CTA and no-JavaScript fallback
         run: node scripts/newsletter-browser-smoke.mjs
+      - name: Verify landing pages at 320px, 390px and desktop widths
+        run: node scripts/landing-browser-smoke.mjs
       - name: Save mobile landing-page previews
         if: always()
         uses: actions/upload-artifact@v4
