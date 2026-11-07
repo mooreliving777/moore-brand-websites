@@ -1,0 +1,54 @@
+name: Brand newsletter prototype checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check generator syntax
+        run: python -m py_compile scripts/build.py
+      - name: Test safe provider configuration and all brand page hooks
+        run: node --test test/*.test.mjs
+      - name: Validate regenerated pages retain newsletter integration
+        run: |
+          python scripts/build.py
+          node --test test/*.test.mjs
+          # The repository already has hand-edited generated pages. Report
+          # their differences without rewriting or merging them automatically.
+          git diff --stat
+
+  preview-browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    # Container includes matching Chromium; nothing is published or submitted.
+    container:
+      image: mcr.microsoft.com/playwright:v1.56.1-noble
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install test-only browser client
+        run: npm install --no-save --package-lock=false playwright@1.56.1
+      - name: Verify native newsletter CTA and no-JavaScript fallback
+        run: node scripts/newsletter-browser-smoke.mjs
+      - name: Save mobile landing-page previews
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: newsletter-mobile-preview
+          path: artifacts/
+          if-no-files-found: ignore
+          retention-days: 7

@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "brands": {
+    "leonard-e-moore": {
+      "service": "wordpress_jetpack",
+      "hostedSignupUrl": "https://leonardemoorellc.wordpress.com/legacy-insider-letter/",
+      "sourcePageId": 94,
+      "note": "Read-only WordPress page inspection confirmed a Jetpack Subscriptions block; successful external signup, consent and confirmation are NOT verified."
+    },
+    "city-web-design-pros": {
+      "service": "wordpress_jetpack",
+      "hostedSignupUrl": "https://citywebdesignprosllc.wordpress.com/free-website-growth-guide/",
+      "sourcePageId": 41,
+      "note": "Read-only WordPress page inspection confirmed a Jetpack Subscriptions block; successful external signup, consent and confirmation are NOT verified."
+    },
+    "moore-legacy-management": {
+      "service": "wordpress_jetpack",
+      "hostedSignupUrl": "https://moorelegacymanagementgroupllc.wordpress.com/partnership-readiness/",
+      "sourcePageId": 38,
+      "note": "Read-only WordPress page inspection confirmed a Jetpack Subscriptions block; successful external signup, consent and confirmation are NOT verified."
+    },
+    "the-harsh-truth-clothing": {
+      "service": "wordpress_jetpack",
+      "hostedSignupUrl": "https://theharshtruthclothinglinellc.wordpress.com/vip-drop-alerts/",
+      "sourcePageId": 33,
+      "note": "Read-only WordPress page inspection confirmed a Jetpack Subscriptions block; successful external signup, consent and confirmation are NOT verified."
+    },
+    "fireworks-tv": {
+      "service": "wordpress_jetpack",
+      "hostedSignupUrl": "https://fireworkstv.wordpress.com/fireworks-inside-track/",
+      "sourcePageId": 44,
+      "note": "Read-only WordPress page inspection confirmed a Jetpack Subscriptions block; successful external signup, consent and confirmation are NOT verified."
+    },
+    "bridge-to-better": {
+      "service": "wordpress_jetpack",
+      "hostedSignupUrl": "https://thebridgetobetterfoundationinc.wordpress.com/community-updates/",
+      "sourcePageId": 36,
+      "note": "Read-only WordPress page inspection confirmed a Jetpack Subscriptions block; successful external signup, consent and confirmation are NOT verified."
+    },
+    "amanda-halterman": {
+      "service": "wordpress_jetpack",
+      "hostedSignupUrl": "https://amandahaltermanllc.wordpress.com/amanda-inside-updates/",
+      "sourcePageId": 37,
+      "note": "Read-only WordPress page inspection confirmed a Jetpack Subscriptions block; successful external signup, consent and confirmation are NOT verified."
+    },
+    "ai-developer-portfolio": {
+      "service": "wordpress_jetpack",
+      "hostedSignupUrl": "https://leonardemooreaideveloperportfo.wordpress.com/digital-innovation-brief/",
+      "sourcePageId": 38,
+      "note": "Read-only WordPress page inspection confirmed a Jetpack Subscriptions block; successful external signup, consent and confirmation are NOT verified."
+    }
+  }
+}

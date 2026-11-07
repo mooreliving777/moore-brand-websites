@@ -1,0 +1,17 @@
+
+/* Branded local gradients replace failed external image loads, not actual media. */
+.asset-fallback{box-sizing:border-box;display:flex;position:relative;flex-direction:column;justify-content:flex-end;align-items:flex-start;isolation:isolate;gap:10px;overflow:hidden;width:100%;min-width:0;padding:30px;background:radial-gradient(circle at 82% 15%,#34d5e9aa 0,transparent 45%),radial-gradient(circle at 12% 80%,#a568fc88 0,transparent 44%),linear-gradient(135deg,#12163b 0%,#372978 54%,#082f49 100%);color:#fff;box-shadow:inset 0 0 0 1px #ffffff25}
+.asset-fallback::before{content:"";position:absolute;width:48%;aspect-ratio:1;right:-12%;top:-20%;border:2px solid #ffffff55;border-radius:50%;box-shadow:0 0 0 26px #ffffff12,0 0 0 60px #ffffff09;z-index:-1}
+.asset-fallback-kicker{font:700 10px/1.6 Arial,Helvetica,sans-serif;letter-spacing:2px;color:#e7d5ff}
+.asset-fallback-title{font:800 clamp(22px,3.5vw,48px)/1.12 Arial,Helvetica,sans-serif;letter-spacing:-1px;max-width:90%;overflow-wrap:anywhere;color:white}
+.asset-fallback-symbol{font:800 38px/1 Arial,Helvetica,sans-serif;color:#54e8ff;margin-bottom:auto;text-shadow:0 0 24px #40e9ff90}
+.asset-fallback-hero{height:380px;padding:36px}
+.theme-city .asset-fallback-hero{height:320px}
+.theme-legacy .asset-fallback-hero,.theme-clothing .asset-fallback-hero{height:440px}
+.asset-fallback-journal{height:190px;padding:20px;gap:7px}
+.asset-fallback-directory{height:220px;padding:22px;gap:7px}
+.asset-fallback-journal .asset-fallback-title,.asset-fallback-directory .asset-fallback-title{font-size:clamp(17px,2vw,24px);line-height:1.18;max-width:100%}
+.asset-fallback-journal .asset-fallback-kicker,.asset-fallback-directory .asset-fallback-kicker{font-size:8px;letter-spacing:1.3px}
+.asset-fallback-journal .asset-fallback-symbol,.asset-fallback-directory .asset-fallback-symbol{font-size:24px}
+@media(max-width:640px){.asset-fallback{padding:22px}.asset-fallback-hero{height:280px}.theme-city .asset-fallback-hero{height:260px}.asset-fallback-hero .asset-fallback-title{font-size:clamp(25px,7vw,38px)}}
+@media(prefers-reduced-motion:reduce){.asset-fallback{transition:none}}

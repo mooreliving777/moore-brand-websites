@@ -1,0 +1,23 @@
+/* Provider-ready newsletter entry; no placeholder network calls. */
+.newsletter-entry{max-width:720px;background:linear-gradient(135deg,#191f42,#272257 65%,#24355f);border:1px solid #687de6;border-radius:24px;color:#fff;padding:clamp(20px,5vw,36px);box-shadow:0 20px 65px #080d2d44;font-family:system-ui,Segoe UI,Arial,sans-serif}
+.newsletter-entry-title{font-size:clamp(1.65rem,4vw,2.25rem);letter-spacing:-.045em;line-height:1.16;margin:0 0 9px}
+.newsletter-entry-description{color:#d1defa;margin:0 0 20px;line-height:1.55}
+.newsletter-entry-form{display:flex;flex-wrap:wrap;gap:14px;align-items:end}
+.newsletter-entry-label{display:grid;gap:7px;font-size:.89rem;font-weight:700;flex:2 1 250px}
+.newsletter-entry-label input{width:100%;border:2px solid #8c99d0;border-radius:12px;background:#111832;color:#fff;font:inherit;min-height:50px;padding:12px}
+.newsletter-entry-consent{display:flex;align-items:flex-start;gap:9px;flex:1 0 100%;color:#e5eafd;font-size:.86rem;line-height:1.5}
+.newsletter-entry-consent input{width:20px;height:20px;flex:none;margin:1px 0 0;accent-color:#66e9df}
+.newsletter-entry-submit,.newsletter-entry-link{display:inline-flex;justify-content:center;align-items:center;border:0;border-radius:12px;background:linear-gradient(110deg,#9d70fc,#58e6e1);padding:14px 20px;min-height:50px;color:#111634;font:800 1rem system-ui,Segoe UI,Arial,sans-serif;text-decoration:none;cursor:pointer}
+.newsletter-entry-submit:hover,.newsletter-entry-link:hover{filter:brightness(1.13)}
+.newsletter-entry-notice{color:#c8d5f3;font-size:.78rem;line-height:1.5;margin:13px 0}
+.newsletter-entry-privacy{display:inline-block;color:#b9eeff;font-size:.82rem;margin-top:4px}
+.newsletter-entry :focus-visible{outline:3px solid #58e6e1;outline-offset:3px}
+@media(max-width:480px){.newsletter-entry-form{display:grid}.newsletter-entry-submit,.newsletter-entry-link{width:100%}}
+
+/* Progressive enhancement preserves the original WordPress CTA without JS. */
+.newsletter-entry[hidden],.newsletter-entry-root[hidden]{display:none!important}
+.connect.newsletter-enhanced > h2,.connect.newsletter-enhanced > p:not(.eyebrow),.connect.newsletter-enhanced > a.button.primary{display:none!important}
+.connect .newsletter-entry{margin:18px auto 24px;text-align:left}
+.connect .newsletter-entry h3{font-family:system-ui,Segoe UI,Arial,sans-serif;color:#fff}
+.connect .newsletter-entry a{color:#121b36}
+.connect .newsletter-entry a.newsletter-entry-privacy{color:#b9eeff}
