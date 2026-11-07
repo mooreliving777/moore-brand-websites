@@ -59,6 +59,8 @@ def link(b, slug):
 def button(b, pair, kind="primary"):
     return f'<a class="button {kind}" href="{esc(link(b,pair[1]))}">{esc(pair[0])}<span aria-hidden="true">↗</span></a>'
 def brand_page(b):
+    from landing_sections import funnel_sections
+    sections = funnel_sections(b, link)
     s=source_for(b); image=b["hero"]; posts=s["posts"][:3]
     posts_markup=""
     for p in posts:
@@ -76,14 +78,21 @@ def brand_page(b):
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{esc(name)} | Moore Brand Network</title><meta name="description" content="{esc(desc)}">
-<meta name="theme-color" content="#10121c"><meta property="og:title" content="{esc(name)}"><meta property="og:description" content="{esc(desc)}"><meta property="og:image" content="{esc(image["url"])}"><meta property="og:url" content="{BASE+slug}/"><link rel="canonical" href="{esc(wp)}"><link rel="stylesheet" href="../assets/network.css"><link rel="stylesheet" href="../assets/image-fallback.css">{news_style}<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml"></head>
+<meta name="theme-color" content="#10121c"><meta property="og:title" content="{esc(name)}"><meta property="og:description" content="{esc(desc)}"><meta property="og:image" content="{esc(image["url"])}"><meta property="og:url" content="{BASE+slug}/"><link rel="canonical" href="{esc(wp)}"><link rel="stylesheet" href="../assets/network.css"><link rel="stylesheet" href="../assets/landing-sections.css"><link rel="stylesheet" href="../assets/image-fallback.css">{news_style}<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml"></head>
 <body class="brand-page theme-{b["theme"]}"><a class="skip" href="#main">Skip to content</a>
-<header class="site-header"><a class="brand" href="./" aria-label="{esc(name)} home">{esc(b["mark"]).replace(" / ","<span>")}{'</span>' if ' / ' in b['mark'] else ''}</a><nav aria-label="Main navigation"><a href="#explore">Explore</a>{'<a href="#journal">Journal</a>' if posts else '<a href="#connect">Connect</a>'}<a href="../blog/">Blog</a><a href="../">Brand network ↗</a></nav></header>
+<header class="site-header"><a class="brand" href="./" aria-label="{esc(name)} home">{esc(b["mark"]).replace(" / ","<span>")}{'</span>' if ' / ' in b['mark'] else ''}</a><nav aria-label="Main navigation"><a href="#explore">Explore</a><a href="#faq">FAQ</a>{'<a href="#journal">Journal</a>' if posts else '<a href="#connect">Connect</a>'}<a href="../blog/">Blog</a><a href="../">Brand network ↗</a></nav></header>
 <main id="main"><section class="hero"><div class="hero-copy"><p class="eyebrow">{esc(b["category"])}</p><h1>{b["headline"]}</h1><p class="intro">{esc(desc)}</p><div class="hero-actions">{button(b,b["primary"])}{button(b,b["secondary"],"secondary")}</div><p class="signature">{esc(b["promise"])}</p></div><figure class="hero-art"><img src="{esc(image["url"])}" alt="{esc(image["alt"])}" width="1400" height="1050" fetchpriority="high"><figcaption>{esc(b["caption"])}</figcaption></figure></section>
 <div class="brand-ribbon"><span>{esc(name)}</span><span>{esc(b["promise"])}</span><span>USA</span></div>
+{sections["trust"]}
+{sections["problem"]}
+{sections["solution"]}
 <section class="section explore" id="explore"><div class="section-heading"><p class="eyebrow">FIND YOUR NEXT STEP</p><h2>{'Explore the legacy.' if b.get('legacy') else 'Made for your next chapter.'}</h2><p>Choose a direction below. Detailed information and service inquiries continue on the original brand website.</p></div><div class="services">{service_html}</div>{watch}</section>
+{sections["how"]}
+{sections["voices"]}
+{sections["access"]}
 {journal}
-<section class="connect section" id="connect"><p class="eyebrow">STAY CONNECTED</p><h2>{esc(b["newsletter"][0])}</h2><p>{'Explore the published work and active brands in the network.' if b.get('legacy') else 'Continue to the original site for the full experience, updates and the latest details.'}</p>{button(b,b["newsletter"])}{newsletter_root}<a class="source-link" href="{esc(wp)}">Original WordPress {'address' if b.get('legacy') else 'website'} ↗</a></section></main>
+{sections["faq"]}
+<section class="connect section" id="connect"><p class="eyebrow">10 / YOUR NEXT MOVE</p><h2>{esc(b["newsletter"][0])}</h2><p>{'Explore the published work and active brands in the network.' if b.get('legacy') else 'Continue to the original site for the full experience, updates and the latest details.'}</p>{button(b,b["newsletter"])}{newsletter_root}<a class="source-link" href="{esc(wp)}">Original WordPress {'address' if b.get('legacy') else 'website'} ↗</a></section></main>
 <footer><div><strong>{esc(name)}</strong><p>Part of the Leonard E. Moore brand network · United States</p></div><div><a href="../">All brand websites ↗</a><p>© 2026 · Brand assets reserved.</p></div><p class="footer-note">GitHub Pages companion website. Published article links and imagery were selected from the existing brand network on October 25, 2026. Forms, bookings, subscriptions and any checkout remain with their original services. This page does not collect account or payment information.</p></footer><script type="module" src="../assets/image-fallback.mjs"></script>{news_script}</body></html>'''
 
 def directory():
