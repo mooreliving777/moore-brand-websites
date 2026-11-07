@@ -44,12 +44,13 @@ try {
       const result = await page.evaluate(order => {
         const ids = [...document.querySelectorAll('section[id]')].map(el => el.id).filter(id => order.includes(id));
         const brokenLocalAnchors = [...document.querySelectorAll('a[href^="#"]')].map(x => x.getAttribute('href').slice(1)).filter(id => id && !document.getElementById(id));
-        return { ids,brokenLocalAnchors,overflows:document.documentElement.scrollWidth > window.innerWidth + 2,cssLoaded:!![...document.styleSheets].find(sheet => sheet.href?.includes('landing-sections.css')) };
+        const offenders = [...document.querySelectorAll('body *')].map(el => ({ el, rect:el.getBoundingClientRect() })).filter(({rect}) => rect.width && (rect.right > window.innerWidth + 2 || rect.left < -2)).slice(0,6).map(({el,rect}) => ({tag:el.tagName,class:el.className?.toString().slice(0,50),width:Math.round(rect.width),left:Math.round(rect.left),right:Math.round(rect.right)}));
+        return { ids,brokenLocalAnchors,offenders,overflows:document.documentElement.scrollWidth > window.innerWidth + 2,cssLoaded:!![...document.styleSheets].find(sheet => sheet.href?.includes('landing-sections.css')) };
       }, steps);
       assert.deepEqual(result.ids, steps, slug + ' at ' + viewport.width + 'px: conversion sections must be in order');
       assert.equal(result.cssLoaded, true, slug + ': landing styling must load');
       assert.deepEqual(result.brokenLocalAnchors, [], slug + ': local anchors must resolve');
-      assert.equal(result.overflows, false, slug + ': horizontal overflow at ' + viewport.width + 'px');
+      assert.equal(result.overflows, false, slug + ': horizontal overflow at ' + viewport.width + 'px. Offenders: ' + JSON.stringify(result.offenders));
       const faq = page.locator('#faq details').first();
       assert.equal(await faq.isVisible(), true, slug + ': FAQ must be visible');
       await faq.locator('summary').click();
