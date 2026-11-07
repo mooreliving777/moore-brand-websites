@@ -1,0 +1,23 @@
+"""Truthful, accessible conversion sections shared by generated brand pages."""
+import json
+from html import escape
+from pathlib import Path
+
+COPY = json.loads((Path(__file__).resolve().parents[1] / "data/landing-copy.json").read_text(encoding="utf-8"))
+
+def funnel_sections(b, link):
+    c = COPY[b["slug"]]
+    e = lambda text: escape(str(text), quote=True)
+    primary_href = e(link(b, b["primary"][1]))
+    primary_label = e(b["primary"][0])
+    title = e(b["name"])
+    src = e(b.get("original") or "")
+    return {
+        "trust": f'''<section class="funnel-trust" id="trust" aria-labelledby="trust-title"><div class="funnel-shell"><p class="funnel-kicker">02 / VERIFIED CONTEXT</p><div class="funnel-trust-row"><h2 id="trust-title">Real sources.<br><em>Clear expectations.</em></h2><div class="funnel-trust-proof"><span>ORIGINAL BRAND LINKS</span><span>PUBLISHED PROJECT CONTEXT</span><span>NO FABRICATED REVIEWS</span></div></div><p class="funnel-caption">This is a companion page for {title}. All forms, current availability and transaction details remain with their original services.</p></div></section>''',
+        "problem": f'''<section class="funnel-problem funnel-band" id="problem" aria-labelledby="problem-title"><div class="funnel-shell funnel-split"><div><p class="funnel-kicker">03 / THE CHALLENGE</p><h2 id="problem-title">Here's what<br><em>gets in the way.</em></h2></div><p>{e(c["pain"])}</p></div></section>''',
+        "solution": f'''<section class="funnel-solution funnel-band" id="solution" aria-labelledby="solution-title"><div class="funnel-shell funnel-split"><div><p class="funnel-kicker">04 / THE WAY FORWARD</p><h2 id="solution-title">A clearer way<br><em>to move forward.</em></h2></div><div><p>{e(c["solution"])}</p><a class="funnel-text-cta" href="{primary_href}">{primary_label} <span aria-hidden="true">↗</span></a></div></div></section>''',
+        "how": f'''<section class="funnel-how funnel-band" id="how" aria-labelledby="how-title"><div class="funnel-shell"><p class="funnel-kicker">06 / HOW IT WORKS</p><h2 id="how-title">Three steps. <em>One clear direction.</em></h2><ol class="funnel-steps"><li><span>01</span><h3>Explore the work</h3><p>Start with the relevant services, projects or published resources above.</p></li><li><span>02</span><h3>Check current details</h3><p>Follow the original service pages for the latest options and availability.</p></li><li><span>03</span><h3>Choose your next step</h3><p>Use the appropriate official inquiry, booking or content link.</p></li></ol></div></section>''',
+        "voices": f'''<section class="funnel-voices funnel-band" id="voices" aria-labelledby="voices-title"><div class="funnel-shell funnel-split"><div><p class="funnel-kicker">07 / TESTIMONIALS &amp; TRUST</p><h2 id="voices-title">Let real work<br><em>speak for itself.</em></h2></div><div><p>Only genuine, permissioned customer feedback belongs here. No invented quotes, ratings, customer counts or logos have been added.</p><p class="funnel-caption">Until verified testimonials are available, explore the published projects and original sources linked on this page.</p></div></div></section>''',
+        "access": f'''<section class="funnel-access funnel-band" id="pricing" aria-labelledby="pricing-title"><div class="funnel-shell funnel-split"><div><p class="funnel-kicker">08 / PRICING &amp; AVAILABILITY</p><h2 id="pricing-title">Transparent<br><em>from the start.</em></h2></div><div><p>{e(c["access"])}</p><a class="funnel-text-cta" href="{primary_href}">Check the source details <span aria-hidden="true">↗</span></a></div></div></section>''',
+        "faq": f'''<section class="funnel-faq funnel-band" id="faq" aria-labelledby="faq-title"><div class="funnel-shell funnel-split"><div><p class="funnel-kicker">09 / FAQ</p><h2 id="faq-title">Questions?<br><em>Answered.</em></h2></div><div class="funnel-questions"><details><summary>Is this the original {title} website?</summary><p>This is a GitHub Pages companion. It connects you with the original source sites and does not replace their current service, policy or account pages.</p></details><details><summary>How do I take the next step?</summary><p>Use the official links on this page. The primary route is <a href="{primary_href}">{primary_label}</a>.</p></details><details><summary>Can I pay or subscribe on this page?</summary><p>No. This companion does not collect payment information, subscriptions or bookings. Any available actions take place on the linked source service.</p></details></div></div></section>'''
+    }
