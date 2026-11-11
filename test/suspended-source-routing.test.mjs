@@ -25,3 +25,17 @@ test('rebuild script retains the suspended-source guard', () => {
   assert.match(generator, /if b\.get\("suspended_source"\): return b\["active_alt"\]/);
   assert.match(generator, /posts=\[\] if b\.get\("suspended_source"\)/);
 });
+
+test('MCS brand media is local typography rather than remote WordPress images', () => {
+  const directory = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const metadata = JSON.parse(readFileSync(new URL('../data/site-map.json', import.meta.url), 'utf8'));
+  const mcs = metadata.find(item => item.path === 'moore-computer-solutions/');
+  assert.ok(mcs, 'MCS site should be listed');
+  assert.equal(mcs.hero.type, 'local_brand_markup');
+  assert.doesNotMatch(html, /moorecomputersolutions\.wordpress\.com\/wp-content\//);
+  assert.doesNotMatch(directory, /moorecomputersolutions\.wordpress\.com\/wp-content\//);
+  assert.doesNotMatch(html, /property="og:image"[^>]*wordpress\.com/);
+  assert.match(html, /class="asset-fallback asset-fallback-hero mcs-brand-graphic"/);
+  assert.match(directory, /class="asset-fallback asset-fallback-directory mcs-brand-graphic"/);
+  assert.match(generator, /def branded_art\(b, size\)/);
+});
