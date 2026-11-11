@@ -10,7 +10,7 @@ import { chromium } from 'playwright';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const artifacts = path.join(root, 'artifacts');
 await mkdir(artifacts, { recursive: true });
-const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.mjs': 'text/javascript', '.svg': 'image/svg+xml', '.json': 'application/json' };
+const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.mjs': 'text/javascript', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.json': 'application/json' };
 const brands = [
   'leonard-e-moore','city-web-design-pros','moore-legacy-management',
   'the-harsh-truth-clothing','moore-computer-solutions','fireworks-tv',
