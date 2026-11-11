@@ -33,7 +33,7 @@ test('Rescue offer follows original WordPress $99 terms, no price or payment sho
 });
 
 test('static generator retains City Web offer on rebuild and CSS supports small viewports', () => {
-  assert.match(generator, /"rescue_offer":true/);
+  assert.match(generator, /"rescue_offer":True/);
   assert.match(generator, /if b\["slug"\] == "city-web-design-pros" and slug == "rescue_preview": return "#rescue-preview"/);
   assert.match(generator, /if b\.get\("rescue_offer"\)/);
   assert.match(generator, /city_rescue =/);
