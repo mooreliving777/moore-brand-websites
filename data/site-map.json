@@ -47,11 +47,8 @@
     "path": "moore-computer-solutions/",
     "wordpress_url": "https://moorecomputersolutions.wordpress.com",
     "hero": {
-      "id": 51,
-      "title": "Real technician repairing a&nbsp;computer",
-      "alt": "A real computer technician working with tools on a computer motherboard",
-      "url": "https://moorecomputersolutions.wordpress.com/wp-content/uploads/2026/10/pexels-photo-6754846.jpeg?w=1024",
-      "original_url": "https://moorecomputersolutions.wordpress.com/wp-content/uploads/2026/10/pexels-photo-6754846.jpeg"
+      "type": "local_brand_markup",
+      "alt": "Moore Computer Solutions original blue and cyan technical brand typography; no staff or device photograph"
     },
     "legacy": false
   },
