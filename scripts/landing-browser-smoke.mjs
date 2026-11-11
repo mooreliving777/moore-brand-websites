@@ -10,7 +10,7 @@ import { chromium } from 'playwright';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const artifacts = path.join(root, 'artifacts');
 await mkdir(artifacts, { recursive: true });
-const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.mjs': 'text/javascript', '.svg': 'image/svg+xml', '.json': 'application/json' };
+const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.mjs': 'text/javascript', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.json': 'application/json' };
 const brands = [
   'leonard-e-moore','city-web-design-pros','moore-legacy-management',
   'the-harsh-truth-clothing','moore-computer-solutions','fireworks-tv',
@@ -57,8 +57,18 @@ try {
       assert.equal(await faq.getAttribute('open'), '', slug + ': FAQ must open with native interaction');
       await faq.locator('summary').click();
       assert.equal(await faq.getAttribute('open'), null, slug + ': FAQ must close');
-      if (viewport.width === 390 && ['city-web-design-pros','the-harsh-truth-clothing','amanda-halterman'].includes(slug)) {
+      if (slug === 'leonard-e-moore') {
+        const hub = page.locator('#moore-universe');
+        assert.equal(await hub.isVisible(), true, 'Leonard: Moore Universe link hub visible');
+        assert.equal(await page.locator('nav a[href="#moore-universe"]').count(), 1, 'Leonard: anchor to universe section');
+        assert.equal(await hub.locator('a[href="https://leonardemoorellc.wordpress.com/projects-and-links/"]').count(), 1, 'Leonard: official public directory CTA');
+        assert.equal(await hub.locator('a[href="https://mooreliving777.github.io/leonard-moore-portfolio/"]').count(), 1, 'Leonard: developer portfolio CTA');
+      }
+      if (viewport.width === 390 && ['leonard-e-moore','city-web-design-pros','the-harsh-truth-clothing','amanda-halterman'].includes(slug)) {
         await page.screenshot({ path: path.join(artifacts, slug + '-landing-390.png'), fullPage: true });
+      }
+      if (viewport.width === 1366 && slug === 'leonard-e-moore') {
+        await page.screenshot({ path: path.join(artifacts, 'leonard-e-moore-universe-desktop.png'), fullPage: true });
       }
       if (viewport.width === 1366 && slug === 'city-web-design-pros') {
         await page.screenshot({ path: path.join(artifacts, 'city-web-landing-desktop.png'), fullPage: true });

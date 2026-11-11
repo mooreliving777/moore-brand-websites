@@ -11,7 +11,7 @@ import { chromium } from 'playwright';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const captures = path.join(root, 'artifacts');
 await mkdir(captures, { recursive: true });
-const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.mjs': 'text/javascript', '.js': 'text/javascript', '.json': 'application/json', '.svg': 'image/svg+xml' };
+const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.mjs': 'text/javascript', '.js': 'text/javascript', '.json': 'application/json', '.svg': 'image/svg+xml', '.webp': 'image/webp' };
 const server = createServer(async (req, res) => {
   let pathname;
   try {
@@ -49,9 +49,18 @@ try {
   for (const slug of nativeBrands) {
     await page.goto(origin + '/' + slug + '/', { waitUntil: 'domcontentloaded' });
     await page.locator('#connect.newsletter-enhanced').waitFor({ state: 'visible', timeout: 10000 });
-    await page.locator('.asset-fallback-hero').waitFor({ state: 'visible', timeout: 10000 });
-    assert.equal(await page.locator('.hero-art img').count(), 0, slug + ': blocked hero photo should be replaced');
-    assert.equal(await page.locator('.asset-fallback-hero').getAttribute('role'), 'img');
+    if (slug === 'the-harsh-truth-clothing') {
+      const hoodie = page.locator('.hero-art img[src="../assets/ht01-signature-hoodie-preview.webp"]');
+      await hoodie.waitFor({ state: 'visible', timeout: 10000 });
+      assert.equal(await hoodie.evaluate(el => el.complete && el.naturalWidth > 0), true,
+        'Harsh Truth: approved local hoodie mockup must be visible without remote network');
+      assert.equal(await page.locator('.hero-art .asset-fallback-hero').count(), 0,
+        'Harsh Truth: generic gradient must never replace an available garment preview');
+    } else {
+      await page.locator('.asset-fallback-hero').waitFor({ state: 'visible', timeout: 10000 });
+      assert.equal(await page.locator('.hero-art img').count(), 0, slug + ': blocked remote hero should be replaced');
+      assert.equal(await page.locator('.asset-fallback-hero').getAttribute('role'), 'img');
+    }
     const section = page.locator('#connect');
     const sourceCTA = section.locator('a.button.primary');
     assert.equal(await sourceCTA.isVisible(), false, slug + ': original button should be replaced only after validated enhancement');
@@ -87,12 +96,15 @@ try {
   await page.evaluate(() => {
     for (const img of document.querySelectorAll('.directory-card img')) img.loading = 'eager';
   });
-  await page.waitForFunction(() => document.querySelectorAll('.directory-card img').length === 0,
+  await page.waitForFunction(() => document.querySelectorAll('.directory-card img').length === 1,
     null, { timeout: 10000 });
+  const localHoodie = page.locator('.directory-card.theme-clothing img[src="assets/ht01-signature-hoodie-preview.webp"]');
+  assert.equal(await localHoodie.evaluate(el => el.complete && el.naturalWidth > 0), true,
+    'Harsh Truth directory should show the real approved hoodie mockup in offline review');
   await page.locator('.directory-card .asset-fallback-directory').first().waitFor({ state: 'visible' });
-  assert.equal(await page.locator('.directory-card .asset-fallback-directory').count(), 13,
-    'All thirteen blocked network thumbnails should have branded fallbacks');
-  assert.equal(await page.locator('.directory-card img').count(), 0);
+  assert.equal(await page.locator('.directory-card .asset-fallback-directory').count(), 12,
+    'Twelve remote thumbnails fallback; one local approved garment remains visible');
+  assert.equal(await page.locator('.directory-card img').count(), 1);
   await page.screenshot({ path: path.join(captures, 'network-directory-gradient-fallback.png'), fullPage: true });
   await context.close();
   const noJs = await browser.newContext({ viewport: { width: 390, height: 844 }, javaScriptEnabled: false });
