@@ -25,7 +25,7 @@
     "wordpress_url": "https://moorelegacymanagementgroupllc.wordpress.com",
     "hero": {
       "id": 50,
-      "title": "Moore Legacy Management \u2014 Luxury Creative Studio&nbsp;Header",
+      "title": "Moore Legacy Management — Luxury Creative Studio&nbsp;Header",
       "alt": "Golden-hour luxury media management office and creative studio with cameras, music memorabilia and a city skyline.",
       "url": "https://moorelegacymanagementgroupllc.wordpress.com/wp-content/uploads/2026/10/moore-legacy-creative-studio-header.png?w=1024",
       "original_url": "https://moorelegacymanagementgroupllc.wordpress.com/wp-content/uploads/2026/10/moore-legacy-creative-studio-header.png"
@@ -37,11 +37,8 @@
     "path": "the-harsh-truth-clothing/",
     "wordpress_url": "https://theharshtruthclothinglinellc.wordpress.com",
     "hero": {
-      "id": 188,
-      "title": "Truth Can\u2019t Be Silenced \u2014 Collection&nbsp;Concept",
-      "alt": "Concept board showing black statement tee and hoodie, canvas tote, hangtag and sticker. Products in development.",
-      "url": "https://theharshtruthclothinglinellc.wordpress.com/wp-content/uploads/2026/10/exec-be31295c-ca76-48f2-9e7a-48e17a22f50c.png?w=683",
-      "original_url": "https://theharshtruthclothinglinellc.wordpress.com/wp-content/uploads/2026/10/exec-be31295c-ca76-48f2-9e7a-48e17a22f50c.png"
+      "url": "https://cdn.shopify.com/s/files/1/0793/2772/3683/files/HT01_Italian_Inspired_Signature_Hoodie_CONCEPT_NOT_FOR_PRODUCTION.png?v=1794300807",
+      "alt": "Digital design mockup of The Harsh Truth Italian-inspired signature hoodie; not a manufactured garment or available inventory"
     },
     "legacy": false
   },
@@ -64,7 +61,7 @@
     "wordpress_url": "https://fireworkstv.wordpress.com",
     "hero": {
       "id": 95,
-      "title": "Fireworks TV \u2014 Cinematic Premium&nbsp;Header",
+      "title": "Fireworks TV — Cinematic Premium&nbsp;Header",
       "alt": "Cinematic production studio with cameras, film lighting and golden sparks against a deep purple atmosphere.",
       "url": "https://fireworkstv.wordpress.com/wp-content/uploads/2026/10/fireworks-tv-cinematic-premium-header.png?w=1024",
       "original_url": "https://fireworkstv.wordpress.com/wp-content/uploads/2026/10/fireworks-tv-cinematic-premium-header.png"
@@ -77,7 +74,7 @@
     "wordpress_url": "https://thebridgetobetterfoundationinc.wordpress.com",
     "hero": {
       "id": 49,
-      "title": "The Bridge to Better Foundation \u2014 Community and Opportunity&nbsp;Header",
+      "title": "The Bridge to Better Foundation — Community and Opportunity&nbsp;Header",
       "alt": "Hopeful community scene of people supporting one another with employment, housing and learning activities at golden hour.",
       "url": "https://thebridgetobetterfoundationinc.wordpress.com/wp-content/uploads/2026/10/bridge-to-better-community-hope-header.png?w=1024",
       "original_url": "https://thebridgetobetterfoundationinc.wordpress.com/wp-content/uploads/2026/10/bridge-to-better-community-hope-header.png"
@@ -95,12 +92,12 @@
     "legacy": false
   },
   {
-    "name": "Leonard E. Moore \u00b7 AI Developer",
+    "name": "Leonard E. Moore · AI Developer",
     "path": "ai-developer-portfolio/",
     "wordpress_url": "https://leonardemooreaideveloperportfo.wordpress.com",
     "hero": {
       "id": 50,
-      "title": "AI Developer Portfolio \u2014 Futuristic Command Center&nbsp;Header",
+      "title": "AI Developer Portfolio — Futuristic Command Center&nbsp;Header",
       "alt": "Futuristic dark blue and gold AI development studio with multiple code dashboards and a city skyline.",
       "url": "https://leonardemooreaideveloperportfo.wordpress.com/wp-content/uploads/2026/10/leonard-ai-developer-futuristic-header.png?w=1024",
       "original_url": "https://leonardemooreaideveloperportfo.wordpress.com/wp-content/uploads/2026/10/leonard-ai-developer-futuristic-header.png"
@@ -113,7 +110,7 @@
     "wordpress_url": "https://theharshtruthofficialstore.wordpress.com",
     "hero": {
       "id": 42,
-      "title": "Truth Can\u2019t Be Silenced collection&nbsp;concept",
+      "title": "Truth Can’t Be Silenced collection&nbsp;concept",
       "alt": "Concept board showing black statement tee and hoodie, canvas tote, hangtag and sticker. Products in development.",
       "url": "https://theharshtruthofficialstore.wordpress.com/wp-content/uploads/2026/10/exec-be31295c-ca76-48f2-9e7a-48e17a22f50c.png?w=683",
       "original_url": "https://theharshtruthofficialstore.wordpress.com/wp-content/uploads/2026/10/exec-be31295c-ca76-48f2-9e7a-48e17a22f50c.png"
@@ -147,7 +144,7 @@
     "legacy": true
   },
   {
-    "name": "Rich Nerdz Nation \u00b7 The Rich Rapper",
+    "name": "Rich Nerdz Nation · The Rich Rapper",
     "path": "the-rich-rapper/",
     "wordpress_url": "https://therichrapper.wordpress.com",
     "hero": {
