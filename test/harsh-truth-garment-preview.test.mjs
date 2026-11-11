@@ -7,13 +7,22 @@ const page = readFileSync(new URL('the-harsh-truth-clothing/index.html', root), 
 const directory = readFileSync(new URL('index.html', root), 'utf8');
 const generator = readFileSync(new URL('scripts/build.py', root), 'utf8');
 const meta = JSON.parse(readFileSync(new URL('data/site-map.json', root), 'utf8'));
+const approvedPreview = readFileSync(new URL('assets/ht01-signature-hoodie-preview.webp', root));
+const fallbackLogic = readFileSync(new URL('assets/image-fallback.mjs', root), 'utf8');
 const garmentUrl = 'https://cdn.shopify.com/s/files/1/0793/2772/3683/files/HT01_Italian_Inspired_Signature_Hoodie_CONCEPT_NOT_FOR_PRODUCTION.png?v=1794300807';
 
 test('the approved garment mockup appears in the hero and network directory', () => {
-  assert.match(page, /class="hero-art"><img src="https:\/\/cdn\.shopify\.com\/[^"]*HT01_Italian_Inspired_Signature_Hoodie_CONCEPT_NOT_FOR_PRODUCTION/);
+  assert.match(page, /class="hero-art"><img src="\.\.\/assets\/ht01-signature-hoodie-preview\.webp" data-upgrade-src="https:\/\/cdn\.shopify\.com\/[^"]*HT01_Italian_Inspired_Signature_Hoodie_CONCEPT_NOT_FOR_PRODUCTION/);
+  assert.match(directory, /class="directory-card theme-clothing"[^]*src="assets\/ht01-signature-hoodie-preview\.webp" data-upgrade-src=/);
   assert.ok(directory.includes(garmentUrl));
+  assert.equal(approvedPreview.subarray(0,4).toString('ascii'), 'RIFF');
+  assert.equal(approvedPreview.subarray(8,12).toString('ascii'), 'WEBP');
+  assert.ok(approvedPreview.length > 2500);
+  assert.match(fallbackLogic, /img\.dataset\.upgradeSrc/);
+  assert.match(fallbackLogic, /upgrade\.onerror = \(\) => \{\}/);
   assert.equal(meta.find(entry => entry.path === 'the-harsh-truth-clothing/').hero.url, garmentUrl);
   assert.ok(generator.includes('HT01_Italian_Inspired_Signature_Hoodie_CONCEPT_NOT_FOR_PRODUCTION'));
+  assert.ok(generator.includes('ht01-signature-hoodie-preview.webp'));
 });
 
 test('concept preview is review-only without checkout or misleading inventory claims', () => {
