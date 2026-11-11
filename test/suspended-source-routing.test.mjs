@@ -39,3 +39,21 @@ test('MCS brand media is local typography rather than remote WordPress images', 
   assert.match(directory, /class="asset-fallback asset-fallback-directory mcs-brand-graphic"/);
   assert.match(generator, /def branded_art\(b, size\)/);
 });
+
+test('permission-first safety checklist is visible but not a fake support intake form', () => {
+  const start = html.indexOf('<section class="mcs-support-safety" id="support-safety"');
+  const end = html.indexOf('</section>', start);
+  assert.ok(start >= 0 && end > start, 'local support safety panel must exist');
+  const section = html.slice(start, end + 10);
+  assert.match(html, /class="button secondary" href="#support-safety">Before remote support/);
+  assert.match(section, /Support intake has not been verified/);
+  assert.match(section, /Start the request yourself/);
+  assert.match(section, /Confirm identity and scope/);
+  assert.match(section, /Keep control/);
+  assert.match(section, /Close the session/);
+  assert.match(section, /form submission, staff availability and response times have not been tested/);
+  assert.doesNotMatch(section, /<form|<input|name="email"|checkout|payment-link/i);
+  assert.match(section, /href="https:\/\/headless-fmeiexgkjgp-mooreliving777-140e\.wix-site-host\.com\/"/);
+  assert.match(generator, /if b\.get\("suspended_source"\) and slug == "support_safety": return "#support-safety"/);
+  assert.match(generator, /support_safety =/);
+});
