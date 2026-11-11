@@ -15,3 +15,43 @@
 .asset-fallback-journal .asset-fallback-symbol,.asset-fallback-directory .asset-fallback-symbol{font-size:24px}
 @media(max-width:640px){.asset-fallback{padding:22px}.asset-fallback-hero{height:280px}.theme-city .asset-fallback-hero{height:260px}.asset-fallback-hero .asset-fallback-title{font-size:clamp(25px,7vw,38px)}}
 @media(prefers-reduced-motion:reduce){.asset-fallback{transition:none}}
+
+
+/* Moore Computer Solutions: original typographic brand visual rather than a
+   potentially blocked image from its suspended WordPress media host. */
+.theme-computer .mcs-brand-graphic {
+  background:
+    radial-gradient(circle at 83% 14%, rgba(86, 222, 255, .28), transparent 38%),
+    repeating-linear-gradient(130deg, transparent 0 31px, rgba(135, 229, 255, .055) 32px 33px),
+    linear-gradient(145deg, #05111e 0%, #08273b 58%, #06425c 100%);
+  color: #f6fdff;
+  border: 1px solid rgba(139, 225, 255, .27);
+}
+.theme-computer .mcs-brand-graphic::before {
+  border-color: rgba(108, 228, 255, .4);
+  box-shadow: 0 0 0 22px rgba(89, 222, 255, .04), 0 0 0 56px rgba(89, 222, 255, .025);
+}
+.theme-computer .mcs-brand-graphic .asset-fallback-symbol {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(34px, 5vw, 66px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -.055em;
+  color: #96edff;
+}
+.theme-computer .mcs-brand-graphic .asset-fallback-kicker {
+  color: #9cecff;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.theme-computer .mcs-brand-graphic .asset-fallback-title {
+  color: #ffffff;
+  font-size: clamp(28px, 4vw, 48px);
+  max-width: 95%;
+}
+.theme-computer .mcs-brand-graphic.asset-fallback-directory .asset-fallback-symbol {
+  font-size: 33px;
+}
+.theme-computer .mcs-brand-graphic.asset-fallback-directory .asset-fallback-title {
+  font-size: clamp(20px, 2vw, 25px);
+}
