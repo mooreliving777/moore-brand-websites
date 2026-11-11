@@ -1,0 +1,39 @@
+name: One-time MCS public form submission QA
+
+on:
+  push:
+    branches:
+      - feature/mcs-standalone-contact-review-2026-11-11
+    paths:
+      - scripts/mcs-public-submit-one-time.mjs
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mcs-one-time-public-submission-2026-11-11
+  cancel-in-progress: false
+
+jobs:
+  public-submit-qa:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    container:
+      image: mcr.microsoft.com/playwright:v1.56.1-noble
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install browser test dependency
+        run: npm install --no-save --package-lock=false playwright@1.56.1
+      - name: Submit one non-sensitive INTERNAL QA request on live Wix form
+        run: node scripts/mcs-public-submit-one-time.mjs
+      - name: Save form outcome screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mcs-one-time-public-submit-evidence
+          path: artifacts/mcs-public-submit-*.png
+          retention-days: 7
+          if-no-files-found: ignore
