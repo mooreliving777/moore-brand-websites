@@ -56,6 +56,8 @@ def link(b, slug):
     if slug == "fireworks": return "../fireworks-tv/"
     if slug == "moorvio": return "https://mooreliving777.github.io/business-command-center/"
     if slug == "featured_concept": return "#garment-preview"
+    if b["slug"] == "the-harsh-truth-clothing" and slug == "shop-vip-and-merchandise":
+        return "https://theharshtruthclothinglinellc.wordpress.com/shop-vip-and-merchandise/"
     return page(source, slug)
 def button(b, pair, kind="primary"):
     return f'<a class="button {kind}" href="{esc(link(b,pair[1]))}">{esc(pair[0])}<span aria-hidden="true">↗</span></a>'
