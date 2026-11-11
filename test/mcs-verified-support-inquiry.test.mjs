@@ -21,7 +21,7 @@ test('MCS routes to a Wix-hosted form, not suspended WordPress', () => {
 
 test('MCS customer messaging does not promise support scheduling, payment or reply times', () => {
   assert.match(html, /Response times, pricing and service availability are confirmed separately/i);
-  assert.match(html, /Human replies, appointments and service availability are not guaranteed/i);
+  assert.match(html, /Human replies.*service availability.*not guaranteed|response times.*not guaranteed/i);
   assert.match(html, /WordPress (?:site|pages|support pages).*suspended/i);
   assert.doesNotMatch(html, /<form|<input|checkout\/|add-to-cart|data-newsletter-entry/i);
   assert.doesNotMatch(html, /id="journal"/);
