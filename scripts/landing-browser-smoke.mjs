@@ -57,11 +57,21 @@ try {
       assert.equal(await faq.getAttribute('open'), '', slug + ': FAQ must open with native interaction');
       await faq.locator('summary').click();
       assert.equal(await faq.getAttribute('open'), null, slug + ': FAQ must close');
-      if (viewport.width === 390 && ['city-web-design-pros','the-harsh-truth-clothing','amanda-halterman'].includes(slug)) {
+      if (slug === 'moore-computer-solutions') {
+        const guide = page.locator('#support-safety');
+        assert.equal(await guide.isVisible(), true, 'MCS: safety guide visible at ' + viewport.width + 'px');
+        assert.equal(await page.locator('.hero-actions a[href="#support-safety"]').count(), 1, 'MCS: safety CTA should reach on-page guide');
+        assert.equal(await guide.locator('ol.mcs-safety-steps li').count(), 4, 'MCS: four safe remote-support steps');
+        assert.equal(await guide.locator('form').count(), 0, 'MCS: no unverified customer intake form');
+      }
+      if (viewport.width === 390 && ['city-web-design-pros','the-harsh-truth-clothing','amanda-halterman','moore-computer-solutions'].includes(slug)) {
         await page.screenshot({ path: path.join(artifacts, slug + '-landing-390.png'), fullPage: true });
       }
       if (viewport.width === 1366 && slug === 'city-web-design-pros') {
         await page.screenshot({ path: path.join(artifacts, 'city-web-landing-desktop.png'), fullPage: true });
+      }
+      if (viewport.width === 1366 && slug === 'moore-computer-solutions') {
+        await page.screenshot({ path: path.join(artifacts, 'moore-computer-solutions-landing-desktop.png'), fullPage: true });
       }
     }
     assert.deepEqual(errors, [], 'No JavaScript errors at ' + viewport.width + 'px');
