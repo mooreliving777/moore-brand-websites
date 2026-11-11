@@ -57,6 +57,21 @@ try {
       assert.equal(await faq.getAttribute('open'), '', slug + ': FAQ must open with native interaction');
       await faq.locator('summary').click();
       assert.equal(await faq.getAttribute('open'), null, slug + ': FAQ must close');
+      if (slug === 'moore-computer-solutions') {
+        const safePanel = page.locator('#support-safety');
+        assert.equal(await safePanel.isVisible(), true, 'MCS: permission-first remote support panel visible');
+        assert.equal(await safePanel.locator('ol li').count(), 4, 'MCS: four consent and safety steps');
+        assert.equal(await page.locator('a[href="https://mooreliving777.wixforms.com/f/7526317906712331460"]').count() >= 4,
+          true, 'MCS: real Wix-hosted support inquiry should be prominent');
+        assert.equal(await page.locator('.hero-actions a[href="#support-safety"]').count(), 1,
+          'MCS: hero must link to local consent checklist');
+        assert.equal(await page.locator('a[href^="https://moorecomputersolutions.wordpress.com"]').count(), 0,
+          'MCS: no suspended WordPress customer CTA');
+        assert.equal(await page.locator('form').count(), 0,
+          'MCS: no fake local data-collecting form');
+        assert.equal(await page.locator('.mcs-brand-graphic').count() >= 1, true,
+          'MCS: actual brand art should render without WordPress images');
+      }
       if (slug === 'leonard-e-moore') {
         const hub = page.locator('#moore-universe');
         assert.equal(await hub.isVisible(), true, 'Leonard: Moore Universe link hub visible');
@@ -64,11 +79,14 @@ try {
         assert.equal(await hub.locator('a[href="https://leonardemoorellc.wordpress.com/projects-and-links/"]').count(), 1, 'Leonard: official public directory CTA');
         assert.equal(await hub.locator('a[href="https://mooreliving777.github.io/leonard-moore-portfolio/"]').count(), 1, 'Leonard: developer portfolio CTA');
       }
-      if (viewport.width === 390 && ['leonard-e-moore','city-web-design-pros','the-harsh-truth-clothing','amanda-halterman'].includes(slug)) {
+      if (viewport.width === 390 && ['leonard-e-moore','city-web-design-pros','the-harsh-truth-clothing','moore-computer-solutions','amanda-halterman'].includes(slug)) {
         await page.screenshot({ path: path.join(artifacts, slug + '-landing-390.png'), fullPage: true });
       }
       if (viewport.width === 1366 && slug === 'leonard-e-moore') {
         await page.screenshot({ path: path.join(artifacts, 'leonard-e-moore-universe-desktop.png'), fullPage: true });
+      }
+      if (viewport.width === 1366 && slug === 'moore-computer-solutions') {
+        await page.screenshot({ path: path.join(artifacts, 'mcs-support-desktop.png'), fullPage: true });
       }
       if (viewport.width === 1366 && slug === 'city-web-design-pros') {
         await page.screenshot({ path: path.join(artifacts, 'city-web-landing-desktop.png'), fullPage: true });

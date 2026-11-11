@@ -1,0 +1,44 @@
+name: Verify public MCS Wix Forms inquiry
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/check-mcs-wixform-browser.mjs'
+      - '.github/workflows/mcs-standalone-inquiry-qa.yml'
+      - 'moore-computer-solutions/**'
+      - 'scripts/build.py'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/check-mcs-wixform-browser.mjs'
+      - '.github/workflows/mcs-standalone-inquiry-qa.yml'
+      - 'moore-computer-solutions/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-mcs-inquiry:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    container:
+      image: mcr.microsoft.com/playwright:v1.56.1-noble
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install existing test-only Playwright version
+        run: npm install --no-save --package-lock=false playwright@1.56.1
+      - name: Browser-check public standalone MCS inquiry form without submitting
+        run: node scripts/check-mcs-wixform-browser.mjs
+      - name: Save actual phone form capture
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mcs-live-wixforms-phone
+          path: artifacts/mcs-real-wixforms-phone-390.png
+          retention-days: 7
+          if-no-files-found: ignore
