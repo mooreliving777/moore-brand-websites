@@ -53,6 +53,20 @@ const checks = [
     ]
   },
   {
+    name: 'Moore Computer Solutions live support companion',
+    path: 'moore-computer-solutions/',
+    contentType: 'text/html',
+    markers: [
+      '<title>Moore Computer Solutions',
+      'id="support-safety"',
+      'mcs-brand-graphic',
+      'https://mooreliving777.wixforms.com/f/7526317906712331460',
+      'Send a support inquiry',
+      'suspended'
+    ],
+    forbidden: ['href="https://moorecomputersolutions.wordpress.com', '<form']
+  },
+  {
     name: 'HT-01 approved garment preview image',
     path: 'assets/ht01-signature-hoodie-preview.webp',
     contentType: 'image/webp',
@@ -110,6 +124,9 @@ function checkContent(check, data) {
     for (const marker of check.markers ?? []) {
       if (!body.includes(marker)) throw new Error('Missing approved content marker: ' + marker);
     }
+    for (const forbidden of check.forbidden ?? []) {
+      if (body.includes(forbidden)) throw new Error('Disallowed suspended/fake customer content detected: ' + forbidden);
+    }
   }
 }
 const results = await Promise.all(checks.map(async check => {
@@ -130,5 +147,5 @@ if (failures.length) {
   console.error('Public Pages QA failed: ' + failures.length + ' of ' + results.length + ' resources could not be verified.');
   process.exitCode = 1;
 } else {
-  console.log('PASS: all ' + results.length + ' live public Pages resources and approved content markers verified; external WordPress inquiry delivery and Shopify checkout were intentionally NOT tested.');
+  console.log('PASS: all ' + results.length + ' live public Pages resources and approved content markers verified; MCS Wix support storage/email tested separately; external WordPress and Shopify checkout were intentionally NOT tested.');
 }
