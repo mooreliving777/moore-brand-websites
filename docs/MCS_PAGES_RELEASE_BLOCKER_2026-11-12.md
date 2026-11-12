@@ -16,3 +16,12 @@ Date checked: 2026-11-12. Status: BLOCKED; review-only, no automatic publication
 5. Review any remaining CodeRabbit comments, security/consent requirements and owner sign-off before merging PR #15.
 
 No purchases, provider API calls, customer submissions, website publication, merge, or account-setting changes are part of this QA documentation.
+
+
+## Owner-gated fallback prepared in this draft
+
+`.github/workflows/pages-manual-recovery.yml` is a **new manual-only publishing option** prepared in draft PR #15. Its pull-request job only checks content and assembles a public-file allowlist. A PR cannot publish. The production job runs only on a manually dispatched workflow from `main` when the confirmation input exactly equals `PUBLISH VERIFIED MAIN`; the `github-pages` environment can enforce additional review.
+
+The fallback is **not activated** by this draft. After separately approved merge and controlled GitHub Pages settings review, an owner may choose **Settings → Pages → Build and deployment → Source: GitHub Actions**, then explicitly invoke the recovery workflow on `main`. Do not switch the source or dispatch publishing until approved; a publishing-source change could affect the existing live URL. Successful artifact generation does not prove a successful Pages release—verify the live URL afterward.
+
+The workflow copies public landing pages, artwork and approved public JSON files into a temporary release directory; it excludes `scripts/`, `test/`, `.github/`, documentation, and `data/source-snapshot.json` from the publishing artifact. All content is from the approved `main` commit; no external API keys, paid models or customer details are accessed.
