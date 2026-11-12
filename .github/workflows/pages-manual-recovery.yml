@@ -1,0 +1,91 @@
+name: Manual GitHub Pages recovery (owner-gated)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/pages-manual-recovery.yml'
+      - 'moore-computer-solutions/**'
+      - 'assets/**'
+  workflow_dispatch:
+    inputs:
+      publish_confirmation:
+        description: 'For owner-approved MAIN publication only: type PUBLISH VERIFIED MAIN'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    name: Verify static site safety before any publication
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check approved public content and support safeguards
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s index.html
+          test -s assets/image-fallback.css
+          test -s moore-computer-solutions/index.html
+          test -s assets/ht01-signature-hoodie-preview.webp
+          for phrase in 'id="support-safety"' 'Start the request yourself' 'Confirm identity and scope' 'Keep control' 'Close the session' 'wixforms.com'; do
+            grep -Fq "$phrase" moore-computer-solutions/index.html
+          done
+          grep -Fq 'mcs-brand-graphic' moore-computer-solutions/index.html
+      - name: Prove output can be assembled without private repository files
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p site-dist/data
+          cp index.html robots.txt sitemap.xml .nojekyll site-dist/
+          for dir in ai-developer-portfolio amanda-halterman assets b3-the-place-2-be blog bridge-to-better city-web-design-pros fireworks-tv leonard-e-moore moore-computer-solutions moore-legacy-management rich-nerdz-nation the-harsh-truth-clothing the-harsh-truth-store the-rich-rapper; do
+            test -d "$dir"
+            cp -R "$dir" site-dist/
+          done
+          for file in newsletter-public-config.json landing-copy.json page-map.json site-map.json; do
+            test -f "data/$file"
+            cp "data/$file" site-dist/data/
+          done
+          test ! -e site-dist/data/source-snapshot.json
+          test ! -e site-dist/.github
+          test ! -e site-dist/scripts
+
+  publish:
+    name: Explicitly approved manual publication of main only
+    needs: preflight
+    if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.publish_confirmation == 'PUBLISH VERIFIED MAIN' }}
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: pages-production
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assemble public-only release
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p site-dist/data
+          cp index.html robots.txt sitemap.xml .nojekyll site-dist/
+          for dir in ai-developer-portfolio amanda-halterman assets b3-the-place-2-be blog bridge-to-better city-web-design-pros fireworks-tv leonard-e-moore moore-computer-solutions moore-legacy-management rich-nerdz-nation the-harsh-truth-clothing the-harsh-truth-store the-rich-rapper; do
+            cp -R "$dir" site-dist/
+          done
+          for file in newsletter-public-config.json landing-copy.json page-map.json site-map.json; do
+            cp "data/$file" site-dist/data/
+          done
+          test ! -e site-dist/data/source-snapshot.json
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: site-dist
+      - uses: actions/deploy-pages@v4
+        id: deployment
