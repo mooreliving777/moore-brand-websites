@@ -59,11 +59,16 @@ const checks = [
     markers: [
       '<title>Moore Computer Solutions',
       'id="support-safety"',
-      'mcs-brand-graphic',
+      'Start the request yourself',
+      'Confirm identity and scope',
+      'Keep control',
+      'Close the session',
+      'href="../assets/image-fallback.css"',
       'https://mooreliving777.wixforms.com/f/7526317906712331460',
       'Send a support inquiry',
       'suspended'
     ],
+    artworkElement: true,
     forbidden: ['href="https://moorecomputersolutions.wordpress.com', '<form']
   },
   {
@@ -77,6 +82,12 @@ const checks = [
     path: 'assets/network.css',
     contentType: 'text/css',
     markers: ['.city-rescue', '.moore-universe', '.merch-preview']
+  },
+  {
+    name: 'Moore Computer Solutions local artwork stylesheet',
+    path: 'assets/image-fallback.css',
+    contentType: 'text/css',
+    markers: ['.asset-fallback', '.asset-fallback-symbol', '.asset-fallback-title']
   }
 ];
 const wait = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
@@ -123,6 +134,15 @@ function checkContent(check, data) {
     const body = new TextDecoder().decode(data.bytes);
     for (const marker of check.markers ?? []) {
       if (!body.includes(marker)) throw new Error('Missing approved content marker: ' + marker);
+    }
+    if (check.artworkElement) {
+      // Check a real, populated graphic element rather than a class name in a comment.
+      const graphic = body.match(/<div\b[^>]*class="[^"]*\bmcs-brand-graphic\b[^"]*"[^>]*>([\s\S]*?)<\/div>/i);
+      if (!graphic ||
+          !/<span\b[^>]*class="asset-fallback-symbol"[^>]*>\s*[^<\s]/i.test(graphic[1]) ||
+          !/<strong\b[^>]*class="asset-fallback-title"[^>]*>\s*[^<\s]/i.test(graphic[1])) {
+        throw new Error('Moore Computer Solutions branded artwork element is missing or empty.');
+      }
     }
     for (const forbidden of check.forbidden ?? []) {
       if (body.includes(forbidden)) throw new Error('Disallowed suspended/fake customer content detected: ' + forbidden);
