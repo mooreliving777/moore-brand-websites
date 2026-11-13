@@ -1,0 +1,35 @@
+{
+  "sites": [
+    {
+      "site": "Fireworks TV Network",
+      "id": "aab4c1a8-b4b4-48db-b4ea-83282f24f875",
+      "slug": "fireworks",
+      "originalFiles": [
+        "index.html",
+        "about.html",
+        "contact.html",
+        "styles.css"
+      ],
+      "deleteOnRollback": [
+        "motion.css",
+        "motion.mjs"
+      ]
+    },
+    {
+      "site": "Amanda Halterman Official",
+      "id": "220cfab7-e6d8-417d-a1ab-4ced1d3d5587",
+      "slug": "amanda",
+      "originalFiles": [
+        "index.html",
+        "about.html",
+        "contact.html",
+        "styles.css"
+      ],
+      "deleteOnRollback": [
+        "motion.css",
+        "motion.mjs"
+      ]
+    }
+  ],
+  "note": "Restore exact originals and remove only added motion files; never replaceAll."
+}
