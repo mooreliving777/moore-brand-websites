@@ -21,7 +21,7 @@
 .mm-scroll-progress{position:fixed;top:0;left:0;z-index:999;width:100%;height:3px;transform:scaleX(0);transform-origin:left center;background:var(--mm-accent,#a5f179);pointer-events:none}
 @media(hover:hover){[data-moore-motion] [data-mm="hover-media"]:hover img{transform:scale(1.035)}[data-moore-motion] [data-mm="interactive"]:hover{transform:translate3d(0,-3px,0)}}
 @keyframes mm-rise{from{opacity:0;transform:translate3d(0,22px,0)}to{opacity:1;transform:none}}
-@keyframes mm-arrive{from{opacity:0;transform:translate3d(16px,9px,0) scale(.98)}to{opacity:1;transform:none}}
+@keyframes mm-arrive{from{opacity:0;transform:translate3d(0,9px,0) scale(.98)}to{opacity:1;transform:none}}
 }
 @media(prefers-reduced-motion:reduce){
 [data-moore-motion],html{scroll-behavior:auto!important}

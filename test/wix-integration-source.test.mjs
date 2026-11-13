@@ -21,6 +21,7 @@ test("Wix source copies include complete motion integration and preserve key lin
   const js=readFileSync(path.join(folder,"motion.mjs"),"utf8");
   const css=readFileSync(path.join(folder,"motion.css"),"utf8");
   assert.match(css,/prefers-reduced-motion:reduce/);
+  assert.doesNotMatch(css,/translate3d\(16px,9px,0\)/,"Hero entrance must not push content outside narrow viewports");
   assert.match(js,/IntersectionObserver/);
   assert.doesNotMatch(js,/fetch\s*\(|localStorage|sessionStorage|document\.cookie/);
  }
