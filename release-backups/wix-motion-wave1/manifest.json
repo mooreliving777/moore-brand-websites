@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-13",
+  "purpose": "Rollback of exact original files for owner-approved two-site Wix static motion release",
+  "sites": [
+    {
+      "slug": "city-web",
+      "changedFiles": [
+        "index.html",
+        "contact.html",
+        "explore.html",
+        "subscribe.html",
+        "styles.css"
+      ],
+      "deleteOnRollback": [
+        "motion.css",
+        "motion.mjs"
+      ]
+    },
+    {
+      "slug": "harsh-truth",
+      "changedFiles": [
+        "index.html",
+        "amanda-collection.html",
+        "collection-preview.html",
+        "contact.html",
+        "faq-and-fulfillment.html",
+        "our-story.html",
+        "subscribe.html",
+        "styles.css"
+      ],
+      "deleteOnRollback": [
+        "motion.css",
+        "motion.mjs"
+      ]
+    }
+  ],
+  "notes": "Partial static upload overwrites only supplied files; on rollback restore every listed original file completely and remove the two added motion assets. Do not use replaceAll. Audit current live files before rollback if later changes occurred."
+}
