@@ -27,6 +27,7 @@ async function makeSiteServer(site){
  return {server,origin:"http://127.0.0.1:"+server.address().port};
 }
 let browser;
+const overflowFailures=[];
 try{
  browser=await chromium.launch({headless:true});
  for(const site of sites){
@@ -59,7 +60,7 @@ try{
       assert.equal(result.active,mode==="no-preference",site.name+"/"+file+" reduced motion setting");
       assert.equal(result.progress,mode==="no-preference"&&result.enabled?1:0,site.name+"/"+file+" scroll bar");
       assert.equal(result.heading,true,site.name+"/"+file+" heading");
-      assert.ok(result.scrollWidth<=result.width+2,site.name+"/"+file+" "+width+"px overflow to "+result.scrollWidth+": "+JSON.stringify(result.offending));
+      if(result.scrollWidth>result.width+2)overflowFailures.push(site.name+"/"+file+" "+width+"px overflow to "+result.scrollWidth+": "+JSON.stringify(result.offending));
       assert.deepEqual(errors,[],site.name+"/"+file+" browser errors");
       if(width===390&&mode==="no-preference"&&file==="index.html"){
        const menu=page.locator(site.slug==="city-web"?"button.menu":"button.nav-toggle");
@@ -88,5 +89,6 @@ try{
    await ctx.close();
   }finally{await new Promise(done=>server.close(done))}
  }
+ assert.deepEqual(overflowFailures,[],"Responsive overflow findings across all Wix pages");
  console.log("PASS staged Wix motion: 11 pages, 2 widths, 2 motion modes, navigation, runtime preference, no-JS");
 }finally{if(browser)await browser.close()}

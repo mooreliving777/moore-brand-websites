@@ -12,3 +12,11 @@
 
 /* 2026-11-09 mobile secondary CTA tap target: 44px */
 @media(max-width:760px){.hero .actions > a.ghost{display:inline-flex;align-items:center;min-height:44px;line-height:1.4}}
+
+/* Motion staging: narrow-screen grid intrinsic width correction; keep dashboard visible. */
+@media(max-width:760px){
+  .hero{grid-template-columns:minmax(0,1fr)}
+  .hero-copy,.hero-graphic{min-width:0;max-width:100%;box-sizing:border-box}
+  .hero-graphic .dashboard{min-width:0;max-width:100%}
+  .hero-graphic .glow{inset:0}
+}

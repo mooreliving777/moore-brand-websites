@@ -39,3 +39,9 @@
 
 /* 2026-11-09 mobile secondary CTA tap target: 44px */
 @media(max-width:760px){.hero .actions > a.text-link{display:inline-flex;align-items:center;min-height:44px;line-height:1.4}}
+
+/* Motion staging: prevent decorative hero media from setting mobile grid minimums. */
+@media(max-width:760px){
+  .hero{grid-template-columns:minmax(0,1fr)}
+  .hero-copy,.hero-art{min-width:0;max-width:100%;box-sizing:border-box}
+}
