@@ -25,3 +25,29 @@ html,body{scroll-behavior:auto!important}
 .motion-scroll-progress{display:none!important}
 }
 @media(hover:none){.hero-art:hover img,.directory-card:hover img,.journal-card:hover img,.directory-card:hover,.journal-card:hover,.service-card:hover,.button:hover{transform:none}}
+
+/* Brand-specific choreography: shared accessibility, distinct visual personalities. */
+@media(prefers-reduced-motion:no-preference){
+/* Crisp, precise movement for City Web and Moore Computer Solutions. */
+.theme-city .motion-reveal:not(.motion-visible),
+.theme-computer .motion-reveal:not(.motion-visible){transform:translate3d(-18px,12px,0)}
+.theme-city.motion-active .hero-art,.theme-computer.motion-active .hero-art{animation-duration:680ms}
+/* Slower editorial entrances for The Harsh Truth apparel and store. */
+.theme-clothing .motion-reveal:not(.motion-visible),
+.theme-store .motion-reveal:not(.motion-visible){transform:translate3d(0,38px,0) scale(.985)}
+.theme-clothing.motion-active .hero-art,.theme-store.motion-active .hero-art{animation-duration:1100ms}
+/* Cinema-led movement for the video network. */
+.theme-fireworks .motion-reveal:not(.motion-visible){transform:translate3d(0,30px,0) scale(.975)}
+.theme-fireworks.motion-active .hero-art{animation-duration:1200ms}
+/* Playful but restrained motion for personality and beauty brands. */
+.theme-amanda .motion-reveal:not(.motion-visible),
+.theme-b3 .motion-reveal:not(.motion-visible){transform:translate3d(15px,18px,0)}
+/* Grounded and slower for community services and management. */
+.theme-foundation .motion-reveal:not(.motion-visible),
+.theme-legacy .motion-reveal:not(.motion-visible){transform:translate3d(0,16px,0);transition-duration:900ms}
+/* Bolder reveal language for hip-hop and creator brands. */
+.theme-richnerdz .motion-reveal:not(.motion-visible),
+.theme-richrapper .motion-reveal:not(.motion-visible){transform:translate3d(-24px,22px,0)}
+/* Consistent resolved end state across every brand. */
+.brand-page .motion-reveal.motion-visible{transform:none}
+}
