@@ -1,0 +1,33 @@
+{
+  "sites": [
+    {
+      "slug": "b3",
+      "id": "adc5f2e6-9210-4e0a-bc08-e9b1dd873382",
+      "originalFiles": [
+        "index.html",
+        "about.html",
+        "contact.html",
+        "styles.css"
+      ],
+      "removeOnRollback": [
+        "motion.css",
+        "motion.mjs"
+      ]
+    },
+    {
+      "slug": "moore-legacy",
+      "id": "e8dafc6d-cdbe-4a67-9bd6-877b886a29bd",
+      "originalFiles": [
+        "index.html",
+        "about.html",
+        "contact.html",
+        "styles.css"
+      ],
+      "removeOnRollback": [
+        "motion.css",
+        "motion.mjs"
+      ]
+    }
+  ],
+  "notice": "Restore originals and delete only new motion assets; avoid replaceAll."
+}
