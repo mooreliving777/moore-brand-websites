@@ -1,0 +1,8 @@
+{
+  "sites": [
+    "developer-wix",
+    "leonard"
+  ],
+  "date": "2026-11-13",
+  "rollback": "Restore original HTML/robots and delete new sitemap.xml; preserve other files."
+}
