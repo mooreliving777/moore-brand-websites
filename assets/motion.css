@@ -1,0 +1,27 @@
+/* Moore Network Motion System. Progressive enhancement, no external dependencies. */
+:root{--motion-ease:cubic-bezier(.2,.7,.2,1);--motion-duration:720ms}
+@media(prefers-reduced-motion:no-preference){
+.motion-reveal{opacity:0;transform:translate3d(0,24px,0);transition:opacity var(--motion-duration) var(--motion-ease),transform var(--motion-duration) var(--motion-ease);transition-delay:var(--motion-delay,0ms)}
+.motion-reveal.motion-visible{opacity:1;transform:none}
+body.motion-active .hero-copy>.eyebrow,body.motion-active .network-intro>.eyebrow{animation:moore-rise 560ms var(--motion-ease) both}
+body.motion-active .hero-copy h1,body.motion-active .network-intro h1{animation:moore-rise 740ms 100ms var(--motion-ease) both}
+body.motion-active .hero-copy .intro,body.motion-active .network-intro>p:not(.eyebrow){animation:moore-rise 720ms 190ms var(--motion-ease) both}
+body.motion-active .hero-actions,body.motion-active .network-intro>.button{animation:moore-rise 700ms 260ms var(--motion-ease) both}
+body.motion-active .hero-art{animation:moore-frame 900ms 120ms var(--motion-ease) both}
+.hero-art,.journal-card,.service-card,.directory-card{transition:transform 450ms var(--motion-ease),box-shadow 450ms ease}
+.hero-art img,.directory-card img,.journal-card img{transition:transform 950ms var(--motion-ease)}
+.hero-art:hover img,.directory-card:hover img,.journal-card:hover img{transform:scale(1.035)}
+.directory-card:hover,.journal-card:hover,.service-card:hover{transform:translate3d(0,-6px,0)}
+.button,.funnel-text-cta{transition:transform 260ms var(--motion-ease),box-shadow 260ms ease}
+.button:hover,.funnel-text-cta:hover{transform:translate3d(0,-3px,0);box-shadow:0 12px 36px color-mix(in srgb,var(--accent,#9efc71) 18%,transparent)}
+@keyframes moore-rise{from{opacity:0;transform:translate3d(0,20px,0)}to{opacity:1;transform:none}}
+@keyframes moore-frame{from{opacity:0;transform:translate3d(18px,9px,0) scale(.98)}to{opacity:1;transform:none}}
+.motion-scroll-progress{position:fixed;z-index:900;top:0;left:0;width:100%;height:3px;background:var(--accent,#a8fa6e);transform:scaleX(0);transform-origin:left;pointer-events:none}
+}
+@media(prefers-reduced-motion:reduce){
+html,body{scroll-behavior:auto!important}
+.motion-reveal{opacity:1!important;transform:none!important;transition:none!important}
+.hero-art,.hero-art img,.journal-card,.service-card,.directory-card,.directory-card img,.journal-card img,.button,.funnel-text-cta{animation:none!important;transition:none!important;transform:none!important}
+.motion-scroll-progress{display:none!important}
+}
+@media(hover:none){.hero-art:hover img,.directory-card:hover img,.journal-card:hover img,.directory-card:hover,.journal-card:hover,.service-card:hover,.button:hover{transform:none}}
