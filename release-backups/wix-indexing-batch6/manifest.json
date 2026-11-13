@@ -1,0 +1,8 @@
+{
+  "sites": [
+    "moorvio-wix",
+    "harsh-truth-store"
+  ],
+  "date": "2026-11-13",
+  "rollback": "Restore original HTML/robots, delete newly created sitemap. Pages remain clearly marked as previews while search-eligible."
+}
