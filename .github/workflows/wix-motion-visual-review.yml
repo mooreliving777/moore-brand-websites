@@ -1,0 +1,33 @@
+name: Wix Motion Visual Review (staged only)
+on:
+  pull_request:
+    paths:
+      - 'integrations/wix-sites/**'
+      - 'scripts/wix-motion-visual-review.mjs'
+      - '.github/workflows/wix-motion-visual-review.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  screenshot:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    container:
+      image: mcr.microsoft.com/playwright:v1.56.1-noble
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install test-only browser dependencies
+        run: npm install --no-save --package-lock=false playwright@1.56.1
+      - name: Capture 12 sites on phone and desktop, with public Wix photos
+        run: node scripts/wix-motion-visual-review.mjs
+      - name: Upload review gallery, screenshots and asset report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wix-motion-visual-review
+          path: artifacts/wix-motion-visual-review/
+          retention-days: 14
+          if-no-files-found: error
