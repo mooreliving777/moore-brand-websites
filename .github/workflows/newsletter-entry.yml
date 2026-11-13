@@ -49,6 +49,8 @@ jobs:
         run: node scripts/newsletter-browser-smoke.mjs
       - name: Verify landing pages at 320px, 390px and desktop widths
         run: node scripts/landing-browser-smoke.mjs
+      - name: Verify animated and reduced-motion paths on mobile and desktop
+        run: node scripts/motion-browser-smoke.mjs
       - name: Save mobile landing-page previews
         if: always()
         uses: actions/upload-artifact@v4
