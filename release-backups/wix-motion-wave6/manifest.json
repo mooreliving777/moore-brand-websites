@@ -1,0 +1,36 @@
+{
+  "scope": "Motion-only static preview sites; not functional CRM or Shopify checkout",
+  "sites": [
+    {
+      "name": "Moorvio — Review Build",
+      "slug": "moorvio-wix",
+      "id": "56c244a1-8395-4217-a8b9-09962bb0ac9c",
+      "originalFiles": [
+        "index.html",
+        "about.html",
+        "contact.html",
+        "styles.css"
+      ],
+      "deleteOnRollback": [
+        "motion.css",
+        "motion.mjs"
+      ]
+    },
+    {
+      "name": "The Harsh Truth Store Preview",
+      "slug": "harsh-truth-store",
+      "id": "b567b638-9741-40dd-bceb-4db2b0bbdafe",
+      "originalFiles": [
+        "index.html",
+        "about.html",
+        "contact.html",
+        "styles.css"
+      ],
+      "deleteOnRollback": [
+        "motion.css",
+        "motion.mjs"
+      ]
+    }
+  ],
+  "rollback": "Restore only original HTML assets, remove two motion assets, never replaceAll."
+}
