@@ -1,0 +1,37 @@
+{
+  "sites": [
+    {
+      "name": "Moore Computer Solutions LLC",
+      "id": "3c221549-eaed-4927-b856-4b486c9a65aa",
+      "slug": "computer",
+      "originalFiles": [
+        "index.html",
+        "about.html",
+        "contact.html",
+        "styles.css"
+      ],
+      "deleteMotionOnRollback": [
+        "motion.css",
+        "motion.mjs"
+      ]
+    },
+    {
+      "name": "The Bridge to Better Foundation",
+      "id": "43991fc9-326f-443b-9a57-a3b547d4d7c9",
+      "slug": "bridge-to-better",
+      "originalFiles": [
+        "index.html",
+        "about.html",
+        "contact.html",
+        "styles.css"
+      ],
+      "deleteMotionOnRollback": [
+        "motion.css",
+        "motion.mjs"
+      ]
+    }
+  ],
+  "releaseInstructions": "Restore original files completely and delete only the new motion assets; never use replaceAll. Audit live changes first.",
+  "sourceBranch": "feature/network-motion-system-nov-2026",
+  "stage": "before-live-release"
+}
