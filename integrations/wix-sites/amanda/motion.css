@@ -1,0 +1,32 @@
+/* Moore Network: portable motion for headless Wix and static Hostinger sites. */
+[data-moore-motion]{--mm-accent:#a5f179;--mm-shift:24px;--mm-duration:760ms;--mm-ease:cubic-bezier(.2,.7,.2,1)}
+[data-moore-motion="city-web"]{--mm-accent:#86e5f3;--mm-shift:18px}
+[data-moore-motion="computer"]{--mm-accent:#73e8ff;--mm-shift:18px}
+[data-moore-motion="clothing"],[data-moore-motion="harsh-truth"]{--mm-accent:#ff6db9;--mm-shift:34px;--mm-duration:940ms}
+[data-moore-motion="moorvio"]{--mm-accent:#b1fc76;--mm-shift:25px}
+[data-moore-motion="fireworks"]{--mm-accent:#f9af68;--mm-shift:30px}
+[data-moore-motion="amanda"]{--mm-accent:#f7a0d8;--mm-shift:25px}
+[data-moore-motion="b3"]{--mm-accent:#d5a8fa;--mm-shift:23px}
+[data-moore-motion="legacy"],[data-moore-motion="foundation"]{--mm-accent:#dbb678;--mm-shift:16px;--mm-duration:900ms}
+[data-moore-motion="leonard"],[data-moore-motion="developer"]{--mm-accent:#e6cb68;--mm-shift:24px}
+[data-moore-motion="richnerdz"]{--mm-accent:#b1c6ff;--mm-shift:27px}
+@media(prefers-reduced-motion:no-preference){
+[data-moore-motion].mm-ready [data-mm="hero"]{animation:mm-rise .82s var(--mm-ease) both}
+[data-moore-motion].mm-ready [data-mm="hero-media"]{animation:mm-arrive 1s .13s var(--mm-ease) both}
+[data-moore-motion].mm-ready [data-mm="reveal"].mm-pending{opacity:0;transform:translate3d(0,var(--mm-shift),0);transition:opacity var(--mm-duration) var(--mm-ease),transform var(--mm-duration) var(--mm-ease);transition-delay:var(--mm-delay,0ms)}
+[data-moore-motion].mm-ready [data-mm="reveal"].mm-pending.mm-visible{opacity:1;transform:none}
+[data-moore-motion] [data-mm="hover-media"]{overflow:hidden}
+[data-moore-motion] [data-mm="hover-media"] img{transition:transform .9s var(--mm-ease)}
+[data-moore-motion] [data-mm="interactive"]{transition:transform .26s var(--mm-ease)}
+.mm-scroll-progress{position:fixed;top:0;left:0;z-index:999;width:100%;height:3px;transform:scaleX(0);transform-origin:left center;background:var(--mm-accent,#a5f179);pointer-events:none}
+@media(hover:hover){[data-moore-motion] [data-mm="hover-media"]:hover img{transform:scale(1.035)}[data-moore-motion] [data-mm="interactive"]:hover{transform:translate3d(0,-3px,0)}}
+@keyframes mm-rise{from{opacity:0;transform:translate3d(0,22px,0)}to{opacity:1;transform:none}}
+@keyframes mm-arrive{from{opacity:0;transform:translate3d(0,9px,0) scale(.98)}to{opacity:1;transform:none}}
+}
+@media(prefers-reduced-motion:reduce){
+[data-moore-motion],html{scroll-behavior:auto!important}
+[data-moore-motion] .mm-pending,[data-moore-motion] .mm-visible{opacity:1!important;transform:none!important;animation:none!important;transition:none!important}
+[data-moore-motion] [data-mm="hero"],[data-moore-motion] [data-mm="hero-media"],[data-moore-motion] [data-mm="interactive"],[data-moore-motion] [data-mm="hover-media"] img{animation:none!important;transition:none!important;transform:none!important}
+.mm-scroll-progress{display:none!important}
+}
+@media(hover:none){[data-moore-motion] [data-mm="hover-media"]:hover img,[data-moore-motion] [data-mm="interactive"]:hover{transform:none!important}}

@@ -7,9 +7,133 @@ import path from "node:path";
 import { chromium } from "playwright";
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 const sites=[
- {name:"City Web",slug:"city-web",pages:["index.html","contact.html","explore.html","subscribe.html"],brand:"city-web"},
- {name:"Harsh Truth",slug:"harsh-truth",pages:["index.html","amanda-collection.html","collection-preview.html","contact.html","faq-and-fulfillment.html","our-story.html","subscribe.html"],brand:"harsh-truth"}
+  {
+    "name": "City Web",
+    "slug": "city-web",
+    "brand": "city-web",
+    "pages": [
+      "index.html",
+      "contact.html",
+      "explore.html",
+      "subscribe.html"
+    ]
+  },
+  {
+    "name": "Harsh Truth",
+    "slug": "harsh-truth",
+    "brand": "harsh-truth",
+    "pages": [
+      "index.html",
+      "amanda-collection.html",
+      "collection-preview.html",
+      "contact.html",
+      "faq-and-fulfillment.html",
+      "our-story.html",
+      "subscribe.html"
+    ]
+  },
+  {
+    "name": "Moore Computer Solutions",
+    "slug": "computer",
+    "brand": "computer",
+    "pages": [
+      "index.html",
+      "about.html",
+      "contact.html"
+    ]
+  },
+  {
+    "name": "Bridge to Better",
+    "slug": "bridge-to-better",
+    "brand": "foundation",
+    "pages": [
+      "index.html",
+      "about.html",
+      "contact.html"
+    ]
+  },
+  {
+    "name": "Moorvio Wix Preview",
+    "slug": "moorvio-wix",
+    "brand": "moorvio",
+    "pages": [
+      "index.html",
+      "about.html",
+      "contact.html"
+    ]
+  },
+  {
+    "name": "Fireworks TV",
+    "slug": "fireworks",
+    "brand": "fireworks",
+    "pages": [
+      "index.html",
+      "about.html",
+      "contact.html"
+    ]
+  },
+  {
+    "name": "Harsh Truth Store Preview",
+    "slug": "harsh-truth-store",
+    "brand": "clothing",
+    "pages": [
+      "index.html",
+      "about.html",
+      "contact.html"
+    ]
+  },
+  {
+    "name": "Amanda Halterman",
+    "slug": "amanda",
+    "brand": "amanda",
+    "pages": [
+      "index.html",
+      "about.html",
+      "contact.html"
+    ]
+  },
+  {
+    "name": "Leonard AI Portfolio",
+    "slug": "developer-wix",
+    "brand": "developer",
+    "pages": [
+      "index.html",
+      "about.html",
+      "contact.html"
+    ]
+  },
+  {
+    "name": "Leonard E. Moore LLC",
+    "slug": "leonard",
+    "brand": "leonard",
+    "pages": [
+      "index.html",
+      "about.html",
+      "contact.html"
+    ]
+  },
+  {
+    "name": "B3 The Place 2 Be",
+    "slug": "b3",
+    "brand": "b3",
+    "pages": [
+      "index.html",
+      "about.html",
+      "contact.html"
+    ]
+  },
+  {
+    "name": "Moore Legacy Management",
+    "slug": "moore-legacy",
+    "brand": "legacy",
+    "pages": [
+      "index.html",
+      "about.html",
+      "contact.html"
+    ]
+  }
 ];
+
 const mime={".html":"text/html; charset=utf-8",".css":"text/css",".js":"text/javascript",".mjs":"text/javascript",".svg":"image/svg+xml",".png":"image/png",".jpg":"image/jpeg"};
 async function makeSiteServer(site){
  const directory=path.join(root,"integrations","wix-sites",site.slug);
@@ -90,5 +214,5 @@ try{
   }finally{await new Promise(done=>server.close(done))}
  }
  assert.deepEqual(overflowFailures,[],"Responsive overflow findings across all Wix pages");
- console.log("PASS staged Wix motion: 11 pages, 2 widths, 2 motion modes, navigation, runtime preference, no-JS");
+ console.log("PASS staged Wix motion: 41 pages across 12 sites, 2 widths, 2 motion modes, navigation, runtime preference, no-JS");
 }finally{if(browser)await browser.close()}

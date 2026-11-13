@@ -1,6 +1,6 @@
 # Wix Headless motion — Source integration staging, November 13, 2026
 
-Two published Wix editorless sites were read as source snapshots and integrated into this draft GitHub branch. **No Wix upload or live release has occurred.**
+Twelve published Wix editorless sites were read as source snapshots and integrated into this draft GitHub branch. **No Wix upload or live release has occurred.**
 
 ## City Web Design Pros
 Source: https://headless-iwdkpgxkiaj-mooreliving777-140e.wix-site-host.com/
@@ -12,8 +12,24 @@ Source: https://headless-nmqhlbobszt-mooreliving777-140e.wix-site-host.com/
 Staged source: `integrations/wix-sites/harsh-truth/` — 7 HTML pages, existing styles.css, site.js, favicon, plus motion.css/motion.mjs.
 Added scope, editorial hero/section reveals and nonfunctional CTA hover attributes. Preserved Shopify/product links, authentic image paths and the Amanda Collection's inline JavaScript.
 
+## Additional ten Wix properties
+Added source-preserving integrations for:
+- **Moore Computer Solutions** — `integrations/wix-sites/computer/` — three original HTML pages, original styles, original favicon and portable motion.css/motion.mjs; brand scope `computer`
+- **Bridge to Better** — `integrations/wix-sites/bridge-to-better/` — three original HTML pages, original styles, original favicon and portable motion.css/motion.mjs; brand scope `foundation`
+- **Moorvio Wix Preview** — `integrations/wix-sites/moorvio-wix/` — three original HTML pages, original styles, original favicon and portable motion.css/motion.mjs; brand scope `moorvio`
+- **Fireworks TV** — `integrations/wix-sites/fireworks/` — three original HTML pages, original styles, original favicon and portable motion.css/motion.mjs; brand scope `fireworks`
+- **Harsh Truth Store Preview** — `integrations/wix-sites/harsh-truth-store/` — three original HTML pages, original styles, original favicon and portable motion.css/motion.mjs; brand scope `clothing`
+- **Amanda Halterman** — `integrations/wix-sites/amanda/` — three original HTML pages, original styles, original favicon and portable motion.css/motion.mjs; brand scope `amanda`
+- **Leonard AI Portfolio** — `integrations/wix-sites/developer-wix/` — three original HTML pages, original styles, original favicon and portable motion.css/motion.mjs; brand scope `developer`
+- **Leonard E. Moore LLC** — `integrations/wix-sites/leonard/` — three original HTML pages, original styles, original favicon and portable motion.css/motion.mjs; brand scope `leonard`
+- **B3 The Place 2 Be** — `integrations/wix-sites/b3/` — three original HTML pages, original styles, original favicon and portable motion.css/motion.mjs; brand scope `b3`
+- **Moore Legacy Management** — `integrations/wix-sites/moore-legacy/` — three original HTML pages, original styles, original favicon and portable motion.css/motion.mjs; brand scope `legacy`
+
+Total staged Wix integration scope: **12 Wix sites, 41 HTML pages**, with source HTML/CSS and brand assets held only on the draft branch.
+Existing business routes, images, contact links and page content were kept. No paid Wix features activated.
+
 ## Validation
-Static unit checks plus browser test in `scripts/wix-integration-browser-smoke.mjs` exercise every staged page at mobile 390px and desktop 1366px, with reduced and normal motion, mobile navigation, and no-JS fallback. External requests are blocked. No checkout, signup or payments attempted.
+Static unit checks plus browser test in `scripts/wix-integration-browser-smoke.mjs` exercise all 41 staged pages across 12 sites at mobile 390px and desktop 1366px, with reduced and normal motion, mobile navigation, and no-JS fallback. External requests are blocked. No checkout, signup or payments attempted.
 
 ## Go-live requirements
 1. Obtain separate explicit live-release approval after reviewing mobile/desktop screenshots.
