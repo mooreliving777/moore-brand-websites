@@ -1,0 +1,8 @@
+{
+  "sites": [
+    "b3",
+    "moore-legacy"
+  ],
+  "date": "2026-11-13",
+  "rollback": "Restore original HTML and robots.txt; remove added sitemap.xml."
+}
