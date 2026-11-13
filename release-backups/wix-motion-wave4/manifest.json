@@ -1,0 +1,35 @@
+{
+  "sites": [
+    {
+      "name": "Leonard Moore AI Developer Portfolio",
+      "id": "2f92a934-ee60-4a08-b510-ca1fd13d1a19",
+      "slug": "developer-wix",
+      "originalFiles": [
+        "index.html",
+        "about.html",
+        "contact.html",
+        "styles.css"
+      ],
+      "deleteNewFilesOnRollback": [
+        "motion.css",
+        "motion.mjs"
+      ]
+    },
+    {
+      "name": "Leonard E. Moore LLC",
+      "id": "8354aa88-1938-4420-a1cc-79ec5e22d744",
+      "slug": "leonard",
+      "originalFiles": [
+        "index.html",
+        "about.html",
+        "contact.html",
+        "styles.css"
+      ],
+      "deleteNewFilesOnRollback": [
+        "motion.css",
+        "motion.mjs"
+      ]
+    }
+  ],
+  "instructions": "Restore only the original affected HTML files and delete two new motion assets. Never replaceAll."
+}
