@@ -53,6 +53,8 @@ jobs:
         run: node scripts/motion-browser-smoke.mjs
       - name: Verify portable headless motion in real browser
         run: node scripts/headless-motion-browser-smoke.mjs
+      - name: Verify actual Wix headless site integrations (non-publishing)
+        run: node scripts/wix-integration-browser-smoke.mjs
       - name: Save mobile landing-page previews
         if: always()
         uses: actions/upload-artifact@v4
