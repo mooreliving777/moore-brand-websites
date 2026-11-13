@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://headless-nmqhlbobszt-mooreliving777-140e.wix-site-host.com/sitemap.xml

@@ -1,0 +1,8 @@
+{
+  "sites": [
+    "city-web",
+    "harsh-truth"
+  ],
+  "date": "2026-11-13",
+  "rollback": "Restore original HTML, robots.txt and sitemap.xml, do not replaceAll, preserve unrelated files."
+}
